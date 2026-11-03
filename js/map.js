@@ -1,11 +1,14 @@
 import { mapConfig } from './config.js';
+import { categories as journalCategories } from './data.js';
 
-const categories = {
-  cities: { color: '#305b46', label: 'Cities', symbol: '●' },
-  food: { color: '#ae6646', label: 'Food & Drink', symbol: '◆' },
-  plans: { color: '#68849a', label: 'Travel Plans', symbol: '↗' },
-  stays: { color: '#b49754', label: 'Accommodations', symbol: '⌂' },
+const markerStyles = {
+  cities: { color: '#305b46', symbol: '●' },
+  food: { color: '#ae6646', symbol: '◆' },
+  attractions: { color: '#68849a', symbol: '↗' },
+  stays: { color: '#b49754', symbol: '⌂' },
 };
+// 分类名称统一来自 data.js，避免导航、地图弹窗和内容页文案不同步。
+const categories = Object.fromEntries(journalCategories.map(({ id, label }) => [id, { ...markerStyles[id], label }]));
 let googleLoader;
 let googleAuthorizationFailed = false;
 const googleAuthSubscribers = new Set();

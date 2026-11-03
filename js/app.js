@@ -1,6 +1,11 @@
 import { entries, categories } from './data.js';
 import { createTravelMap } from './map.js';
-import { escapeHtml as esc, journalUrl, parseRoute, filterEntries } from './utils.js';
+import { escapeHtml as esc, journalUrl, parseRoute, filterEntries, googleMapsUrl, googleMapsEmbedUrl } from './utils.js';
+
+// 页面职责：首页 renderHome、分类 renderCollection、城市/地点详情 renderArticle。
+// 正文、照片、评分和 Google Maps 链接在 data.js 的对应城市分块中修改。
+// 首页底部精选：把这里的 ID 改成任何已有记录 ID（城市 ID + -food / -stay / -attraction）。
+const featuredIds = ['hefei-food', 'huangshan-attraction', 'singapore-stay'];
 
 const icons = {
   pin: '<path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
@@ -14,16 +19,16 @@ const icons = {
   calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>',
   globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6h14M5 18h14"/>',
   food: '<path d="M5 3v7m3-7v7m3-7v7M5 7h6M8 10v11m9-18c-3 4-3 8 1 9V3m0 9v9"/>',
-  plans: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/>',
+  attractions: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/>',
   stays: '<path d="M3 20V9m18 11V9M3 17h18M6 9V5h12v4M3 10h18v7H3v-7Z"/>',
 };
 const icon = (name, size = 16) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.pin}</svg>`;
-const categoryIcon = { cities: 'globe', food: 'food', plans: 'plans', stays: 'stays' };
-const categoryColors = { cities: '#305b46', food: '#ae6646', plans: '#68849a', stays: '#b49754' };
+const categoryIcon = { cities: 'globe', food: 'food', attractions: 'attractions', stays: 'stays' };
+const categoryColors = { cities: '#305b46', food: '#ae6646', attractions: '#68849a', stays: '#b49754' };
 const descriptions = {
   cities: '用脚步认识一座城市，记下街角、河岸，以及那些让人想再去一次的瞬间。',
   food: '一杯咖啡、一家小店、一顿慢慢吃的晚餐。用味道记住每一次出发。',
-  plans: '把想去的地方串成路线，为迷路和偶遇留一点空白。',
+  attractions: '值得停留的风景、街区与文化地标，记下每座城市里想去的地方。',
   stays: '旅途中暂时的家：一扇好看的窗、一张舒服的床，以及醒来后的第一束光。',
 };
 const cities = entries.filter((entry) => entry.category === 'cities');
@@ -51,12 +56,11 @@ function card(entry) {
 
 function renderHome() {
   const countries = new Set(cities.map((city) => city.country)).size;
-  const featuredIds = ['kamo-river-coffee', 'kyoto-weekend', 'copenhagen-city-stay'];
   const featured = featuredIds.map((id) => entries.find((entry) => entry.id === id)).filter(Boolean);
   main.innerHTML = `<div class="page home-page">
     <section class="home-intro" aria-labelledby="home-title">
       <div><div class="eyebrow">Field notes &amp; faraway places</div><h1 id="home-title">A little further,<br><em>a little closer.</em></h1></div>
-      <div class="intro-aside"><p lang="zh-CN">把世界走成自己的地图。<br>记录路过的城市、喜欢的味道，<br>和那些值得停留的日常。</p><div class="intro-stats"><div><strong>${cities.length.toString().padStart(2,'0')}</strong><span>cities</span></div><span class="stat-divider"></span><div><strong>${countries.toString().padStart(2,'0')}</strong><span>countries</span></div><small class="sample-badge">Sample edition</small></div></div>
+      <div class="intro-aside"><p lang="zh-CN">把世界走成自己的地图。<br>记录路过的城市、喜欢的味道，<br>和那些值得停留的日常。</p><div class="intro-stats"><div><strong>${cities.length.toString().padStart(2,'0')}</strong><span>cities</span></div><span class="stat-divider"></span><div><strong>${countries.toString().padStart(2,'0')}</strong><span>countries / regions</span></div><small class="sample-badge">Sample edition</small></div></div>
     </section>
     <section class="map-section" aria-labelledby="map-heading">
       <div class="section-top"><h2 id="map-heading" class="section-heading">${icon('compass',20)} The world, bookmarked.</h2><div class="map-filters" role="group" aria-label="Filter map places"><button class="filter-button" data-map-category="all" aria-pressed="true">All places</button>${categories.map((category) => `<button class="filter-button" data-map-category="${category.id}" aria-pressed="false">${dot(category.id)}${esc(category.label)}</button>`).join('')}</div></div>
@@ -119,6 +123,18 @@ function updateCollection(category) {
   document.querySelector('#collection-grid').innerHTML = items.length ? items.map(card).join('') : `<div class="empty-state"><h2>No places found.</h2><p>Try another city or a different search.</p><button class="solid-button" id="clear-filters">Clear filters ${icon('reset',13)}</button></div>`;
 }
 
+// 所有城市和地点共用地图操作区；Google 预览不可用时仍保留两个独立链接。
+function articleMap(entry) {
+  return `<div class="article-map-actions">
+    <a class="solid-button" href="#/?place=${encodeURIComponent(entry.id)}">${icon('pin',14)} Find on the map</a>
+    <a class="solid-button google-maps-link" href="${esc(googleMapsUrl(entry))}" target="_blank" rel="noopener noreferrer">${icon('northeast',14)} Open in Google Maps</a>
+  </div>
+  <div class="google-map-preview">
+    <iframe title="Google Maps preview — ${esc(entry.title)}" src="${esc(googleMapsEmbedUrl(entry))}" width="250" height="220" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <p>Google Maps · ${entry.demo && entry.category !== 'cities' ? 'Sample place · area search' : esc(location(entry))}</p>
+  </div>`;
+}
+
 function renderArticle(entry) {
   const related = entries.filter((item) => item.id !== entry.id && item.cityId === entry.cityId);
   const formattedDate = new Intl.DateTimeFormat('en',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${entry.date}T12:00:00Z`));
@@ -128,7 +144,7 @@ function renderArticle(entry) {
     <div class="article-layout"><div class="article-body"><p class="article-lede" lang="zh-CN">${esc(entry.excerpt)}</p>${entry.content.map((section,index) => `<section class="article-section"><h2><small>${String(index+1).padStart(2,'0')}</small>${esc(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p lang="zh-CN">${esc(paragraph)}</p>`).join('')}</section>`).join('')}
       ${entry.gallery?.length ? `<div class="article-gallery">${entry.gallery.map((photo) => `<figure><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy" /><figcaption>${esc(photo.caption || photo.alt)}</figcaption></figure>`).join('')}</div>` : ''}
       <a href="#/${entry.category}" class="text-link article-back">${icon('arrow',14).replace('<svg','<svg style="transform:rotate(180deg)"')} Back to ${esc(categoryLabel(entry.category))}</a></div>
-      <aside class="article-sidebar"><div class="details-box"><h2>The field notes</h2><dl><div class="detail-row"><dt>Location</dt><dd>${esc(location(entry))}</dd></div><div class="detail-row"><dt>My rating · Sample</dt><dd class="detail-rating">${icon('star',18)}<strong>${Number(entry.rating).toFixed(1)}</strong> / 5</dd></div><div class="detail-row"><dt>Coordinates</dt><dd>${Math.abs(entry.coordinates[0]).toFixed(3)}° ${entry.coordinates[0]>=0?'N':'S'}, ${Math.abs(entry.coordinates[1]).toFixed(3)}° ${entry.coordinates[1]>=0?'E':'W'}</dd></div></dl><a class="solid-button" href="#/?place=${encodeURIComponent(entry.id)}">${icon('pin',14)} Find on the map</a><div class="tags">${(entry.tags || []).map((tag)=>`<span class="tag">${esc(tag)}</span>`).join('')}</div></div></aside>
+      <aside class="article-sidebar"><div class="details-box"><h2>The field notes</h2><dl><div class="detail-row"><dt>Location</dt><dd>${esc(location(entry))}</dd></div><div class="detail-row"><dt>My rating · Sample</dt><dd class="detail-rating">${icon('star',18)}<strong>${Number(entry.rating).toFixed(1)}</strong> / 5</dd></div><div class="detail-row"><dt>Coordinates</dt><dd>${Math.abs(entry.coordinates[0]).toFixed(3)}° ${entry.coordinates[0]>=0?'N':'S'}, ${Math.abs(entry.coordinates[1]).toFixed(3)}° ${entry.coordinates[1]>=0?'E':'W'}</dd></div></dl>${articleMap(entry)}<div class="tags">${(entry.tags || []).map((tag)=>`<span class="tag">${esc(tag)}</span>`).join('')}</div></div></aside>
     </div>
     ${related.length ? `<section class="article-related"><div class="section-intro"><div><div class="eyebrow">Keep wandering</div><h2>More from ${esc(entry.city)}.</h2></div></div><div class="card-grid">${related.map(card).join('')}</div></section>`:''}
   </article>`;

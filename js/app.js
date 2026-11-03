@@ -1,0 +1,195 @@
+import { entries, categories } from './data.js';
+import { createTravelMap } from './map.js';
+import { escapeHtml as esc, journalUrl, parseRoute, filterEntries } from './utils.js';
+
+const icons = {
+  pin: '<path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+  arrow: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
+  northeast: '<path d="M6 18 18 6M6 6h12v12"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>',
+  star: '<path d="m12 3 2.8 5.7 6.3.9-4.6 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+  reset: '<path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/>',
+  chevron: '<path d="m9 6 6 6-6 6"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6h14M5 18h14"/>',
+  food: '<path d="M5 3v7m3-7v7m3-7v7M5 7h6M8 10v11m9-18c-3 4-3 8 1 9V3m0 9v9"/>',
+  plans: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/>',
+  stays: '<path d="M3 20V9m18 11V9M3 17h18M6 9V5h12v4M3 10h18v7H3v-7Z"/>',
+};
+const icon = (name, size = 16) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.pin}</svg>`;
+const categoryIcon = { cities: 'globe', food: 'food', plans: 'plans', stays: 'stays' };
+const categoryColors = { cities: '#305b46', food: '#ae6646', plans: '#68849a', stays: '#b49754' };
+const descriptions = {
+  cities: '用脚步认识一座城市，记下街角、河岸，以及那些让人想再去一次的瞬间。',
+  food: '一杯咖啡、一家小店、一顿慢慢吃的晚餐。用味道记住每一次出发。',
+  plans: '把想去的地方串成路线，为迷路和偶遇留一点空白。',
+  stays: '旅途中暂时的家：一扇好看的窗、一张舒服的床，以及醒来后的第一束光。',
+};
+const cities = entries.filter((entry) => entry.category === 'cities');
+const main = document.querySelector('#main');
+const menuButton = document.querySelector('.menu-toggle');
+const nav = document.querySelector('#primary-navigation');
+let activeMap = null;
+let routeVersion = 0;
+let mapCategory = 'all';
+let collectionFilters = { city: 'all', search: '' };
+
+function categoryLabel(id) { return categories.find((category) => category.id === id)?.label || 'Journal'; }
+function location(entry) { return `${entry.city}, ${entry.country}`; }
+function dot(category) { return `<span class="category-dot" style="--category-color:${categoryColors[category]}"></span>`; }
+function rating(entry) { return `${icon('star', 12)} ${Number(entry.rating).toFixed(1)}`; }
+function image(entry, className = '', lazy = true) {
+  return `<img class="${className}" src="${esc(entry.image)}" alt="${esc(entry.imageAlt || entry.title)}" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" />`;
+}
+function card(entry) {
+  return `<a class="story-card" href="${journalUrl(entry.id)}" aria-label="${esc(entry.title)} — ${esc(location(entry))}, rated ${entry.rating} out of 5">
+    <div class="card-image-wrap">${image(entry, 'card-image')}<span class="card-type">${dot(entry.category)}${esc(categoryLabel(entry.category))}</span><span class="card-rating">${rating(entry)} <span>/ 5</span></span></div>
+    <div class="card-content"><div class="card-location">${icon('pin', 12)} ${esc(location(entry))}</div><h3>${esc(entry.title)}</h3><p class="card-excerpt" lang="zh-CN">${esc(entry.excerpt)}</p><span class="card-read">Read story ${icon('arrow', 13)}</span></div>
+  </a>`;
+}
+
+function renderHome() {
+  const countries = new Set(cities.map((city) => city.country)).size;
+  const featuredIds = ['kamo-river-coffee', 'kyoto-weekend', 'copenhagen-city-stay'];
+  const featured = featuredIds.map((id) => entries.find((entry) => entry.id === id)).filter(Boolean);
+  main.innerHTML = `<div class="page home-page">
+    <section class="home-intro" aria-labelledby="home-title">
+      <div><div class="eyebrow">Field notes &amp; faraway places</div><h1 id="home-title">A little further,<br><em>a little closer.</em></h1></div>
+      <div class="intro-aside"><p lang="zh-CN">把世界走成自己的地图。<br>记录路过的城市、喜欢的味道，<br>和那些值得停留的日常。</p><div class="intro-stats"><div><strong>${cities.length.toString().padStart(2,'0')}</strong><span>cities</span></div><span class="stat-divider"></span><div><strong>${countries.toString().padStart(2,'0')}</strong><span>countries</span></div><small class="sample-badge">Sample edition</small></div></div>
+    </section>
+    <section class="map-section" aria-labelledby="map-heading">
+      <div class="section-top"><h2 id="map-heading" class="section-heading">${icon('compass',20)} The world, bookmarked.</h2><div class="map-filters" role="group" aria-label="Filter map places"><button class="filter-button" data-map-category="all" aria-pressed="true">All places</button>${categories.map((category) => `<button class="filter-button" data-map-category="${category.id}" aria-pressed="false">${dot(category.id)}${esc(category.label)}</button>`).join('')}</div></div>
+      <div class="map-frame"><div class="map-canvas-wrap"><div id="travel-map" class="travel-map" role="region" aria-label="Interactive map of cities and saved places"></div><button id="reset-map" class="map-reset" disabled>${icon('reset',12)} Reset view</button></div>
+        <aside class="map-side" aria-label="Places on the map"><div class="eyebrow">A pin, a memory</div><h3>Follow the little dots.</h3><p class="map-side-description">Choose a place. Find a story.<br>There's a little more behind every pin.</p><div class="map-places" id="map-places">${mapPlaces(cities)}</div></aside>
+      </div>
+      <div class="map-footnote"><span>${icon('pin',11)} <span id="map-count">${entries.length} saved places</span> · Select a pin to read its story</span><span id="map-provider" aria-live="polite">Loading map…</span></div>
+    </section>
+    <section class="journal-section" aria-labelledby="city-list-heading"><div class="section-intro"><div><div class="eyebrow">The city index</div><h2 id="city-list-heading">Places that stayed with me.</h2></div><a class="text-link" href="#/cities">Explore all cities ${icon('arrow',14)}</a></div>
+      <div class="city-list">${cities.map((city,index) => `<a class="city-row" href="${journalUrl(city.id)}"><span class="city-index">${String(index+1).padStart(2,'0')}</span>${image(city,'city-thumb')}<div class="city-row-info"><h3>${esc(city.title)}</h3><p>${esc(location(city))}</p></div><span class="city-row-rating" aria-label="Rated ${city.rating} out of 5">${rating(city)}</span>${icon('northeast',18).replace('<svg','<svg class="city-row-arrow"')}</a>`).join('')}</div>
+    </section>
+    <section class="journal-section home-stories" aria-labelledby="stories-heading"><div class="section-intro"><div><div class="eyebrow">Between the destinations</div><h2 id="stories-heading">It's the little things.</h2></div><span class="tiny-label">Good food. Slow days. A place to stay.</span></div><div class="card-grid">${featured.map(card).join('')}</div></section>
+    <div class="home-note"><p>Take the long way home.</p><span lang="zh-CN">这是博客的示例篇章。城市、评分与文字仅用于展示，等待被真实的旅行记忆填满。</span></div>
+  </div>`;
+}
+
+function noteCount(cityId) {
+  const count = entries.filter((item) => item.cityId === cityId).length;
+  return `${count} ${count === 1 ? 'note' : 'notes'}`;
+}
+
+function mapPlaces(items) {
+  return items.map((entry) => `<button class="map-place" data-focus-place="${esc(entry.id)}" aria-label="Show ${esc(entry.title)} on the map"><span class="map-place-icon">${icon(categoryIcon[entry.category],13)}</span><span class="map-place-info"><span class="map-place-name">${esc(entry.title)}</span><span class="map-place-country">${esc(location(entry))}</span></span><span class="map-place-count">${entry.category === 'cities' ? noteCount(entry.id) : Number(entry.rating).toFixed(1) + ' ★'}</span></button>`).join('');
+}
+
+async function initializeMap(version, focusId) {
+  const container = document.querySelector('#travel-map');
+  const map = await createTravelMap(container, entries, { onProviderChange(provider) {
+    if (version !== routeVersion) return;
+    const label = document.querySelector('#map-provider');
+    if (label) label.textContent = provider === 'google' ? 'Google Maps' : provider === 'leaflet' ? 'OpenStreetMap · Preview' : 'Map unavailable';
+  } });
+  if (version !== routeVersion) { map.destroy(); return; }
+  activeMap = map;
+  // A filter may have been selected while the map provider was still loading.
+  activeMap.setEntries(mapCategory === 'all' ? entries : filterEntries(entries, { category: mapCategory }));
+  activeMap.reset();
+  const reset = document.querySelector('#reset-map');
+  if (reset) reset.disabled = map.provider === 'unavailable';
+  if (focusId && entries.some((entry) => entry.id === focusId)) {
+    map.focus(focusId);
+    document.querySelector('.map-section')?.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+}
+
+function renderCollection(category) {
+  const items = entries.filter((entry) => entry.category === category.id);
+  const relevantCities = cities.filter((city) => items.some((entry) => entry.cityId === city.id));
+  main.innerHTML = `<div class="page collection-page"><div class="breadcrumb"><a href="#/">Home</a>${icon('chevron',11)}<span>${esc(category.label)}</span></div>
+    <section class="collection-hero"><div><div class="eyebrow">The collection · ${String(categories.indexOf(category)+1).padStart(2,'0')}</div><h1>${esc(category.label)}<sup>${String(items.length).padStart(2,'0')}</sup></h1><p lang="zh-CN">${descriptions[category.id]}</p></div><div class="collection-art" aria-hidden="true">${icon(categoryIcon[category.id],44)}</div></section>
+    <div class="collection-toolbar"><div class="collection-controls"><label class="search-field">${icon('search',15)}<input type="search" id="collection-search" placeholder="Search places…" aria-label="Search ${esc(category.label)}" /></label><select class="city-select" id="city-filter" aria-label="Filter by city"><option value="all">All cities</option>${relevantCities.map((city) => `<option value="${esc(city.id)}">${esc(city.title)}</option>`).join('')}</select></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
+    <div id="collection-grid" class="card-grid"></div><p class="collection-note">${icon('compass',13)} Sample edition · Personal ratings are out of 5. All entries are illustrative.</p>
+  </div>`;
+  updateCollection(category.id);
+}
+
+function updateCollection(category) {
+  const items = filterEntries(entries, { category, ...collectionFilters });
+  document.querySelector('#result-count').textContent = `${String(items.length).padStart(2,'0')} ${items.length === 1 ? 'story' : 'stories'} in this collection`;
+  document.querySelector('#collection-grid').innerHTML = items.length ? items.map(card).join('') : `<div class="empty-state"><h2>No places found.</h2><p>Try another city or a different search.</p><button class="solid-button" id="clear-filters">Clear filters ${icon('reset',13)}</button></div>`;
+}
+
+function renderArticle(entry) {
+  const related = entries.filter((item) => item.id !== entry.id && item.cityId === entry.cityId);
+  const formattedDate = new Intl.DateTimeFormat('en',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${entry.date}T12:00:00Z`));
+  main.innerHTML = `<article class="page article-page"><div class="breadcrumb"><a href="#/">Home</a>${icon('chevron',11)}<a href="#/${entry.category}">${esc(categoryLabel(entry.category))}</a>${icon('chevron',11)}<span>${esc(entry.title)}</span></div>
+    <header class="article-header"><div class="eyebrow">${esc(categoryLabel(entry.category))} · A travel journal</div><h1>${esc(entry.title)}</h1><p class="article-subtitle">${esc(entry.subtitle || '')}</p><div class="article-meta"><span>${icon('pin',13)}${esc(location(entry))}</span><span>${icon('calendar',13)}<time datetime="${esc(entry.date)}">${formattedDate}</time></span><small class="sample-badge">Sample story</small></div></header>
+    ${image(entry,'article-cover',false)}<p class="article-caption">${esc(entry.imageAlt || entry.title)} · Illustrative photography</p>
+    <div class="article-layout"><div class="article-body"><p class="article-lede" lang="zh-CN">${esc(entry.excerpt)}</p>${entry.content.map((section,index) => `<section class="article-section"><h2><small>${String(index+1).padStart(2,'0')}</small>${esc(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p lang="zh-CN">${esc(paragraph)}</p>`).join('')}</section>`).join('')}
+      ${entry.gallery?.length ? `<div class="article-gallery">${entry.gallery.map((photo) => `<figure><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy" /><figcaption>${esc(photo.caption || photo.alt)}</figcaption></figure>`).join('')}</div>` : ''}
+      <a href="#/${entry.category}" class="text-link article-back">${icon('arrow',14).replace('<svg','<svg style="transform:rotate(180deg)"')} Back to ${esc(categoryLabel(entry.category))}</a></div>
+      <aside class="article-sidebar"><div class="details-box"><h2>The field notes</h2><dl><div class="detail-row"><dt>Location</dt><dd>${esc(location(entry))}</dd></div><div class="detail-row"><dt>My rating · Sample</dt><dd class="detail-rating">${icon('star',18)}<strong>${Number(entry.rating).toFixed(1)}</strong> / 5</dd></div><div class="detail-row"><dt>Coordinates</dt><dd>${Math.abs(entry.coordinates[0]).toFixed(3)}° ${entry.coordinates[0]>=0?'N':'S'}, ${Math.abs(entry.coordinates[1]).toFixed(3)}° ${entry.coordinates[1]>=0?'E':'W'}</dd></div></dl><a class="solid-button" href="#/?place=${encodeURIComponent(entry.id)}">${icon('pin',14)} Find on the map</a><div class="tags">${(entry.tags || []).map((tag)=>`<span class="tag">${esc(tag)}</span>`).join('')}</div></div></aside>
+    </div>
+    ${related.length ? `<section class="article-related"><div class="section-intro"><div><div class="eyebrow">Keep wandering</div><h2>More from ${esc(entry.city)}.</h2></div></div><div class="card-grid">${related.map(card).join('')}</div></section>`:''}
+  </article>`;
+}
+
+function renderNotFound() {
+  main.innerHTML = `<div class="page not-found"><div class="eyebrow">A small detour · 404</div><h1>Off the beaten path.</h1><p>This story hasn't been written yet.</p><a href="#/" class="solid-button">Back to the map ${icon('arrow',14)}</a></div>`;
+}
+
+function closeMenu() { nav.classList.remove('is-open'); menuButton.setAttribute('aria-expanded','false'); menuButton.setAttribute('aria-label','Open navigation'); }
+
+async function renderRoute() {
+  // Allow the accessibility skip link to target the current page without routing.
+  if (locationHash() === '#main' && main.children.length) { main.focus(); return; }
+  const version = ++routeVersion;
+  activeMap?.destroy(); activeMap = null;
+  const route = parseRoute(locationHash());
+  const category = categories.find((item)=>item.id === route.page);
+  const article = route.page === 'journal' ? entries.find((entry)=>entry.id === route.id) : null;
+  closeMenu();
+  mapCategory = 'all'; collectionFilters = { city:'all', search:'' };
+  document.querySelectorAll('[data-nav]').forEach((link) => { const current = link.dataset.nav === (article?.category || route.page); if(current) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
+  if (route.page === 'home') renderHome(); else if(category) renderCollection(category); else if(article) renderArticle(article); else renderNotFound();
+  document.title = `${article?.title || category?.label || (route.page === 'home' ? 'A personal travel atlas' : 'Story not found')} — 十一十一‘s Blog`;
+  window.scrollTo({top:0,behavior:'instant'});
+  if (version > 1) main.focus({preventScroll:true});
+  if (route.page === 'home') {
+    try { await initializeMap(version, route.params.get('place')); }
+    catch (error) { if (version === routeVersion) { const provider = document.querySelector('#map-provider'); if(provider) provider.textContent = 'Map unavailable · Explore the city index below'; } console.error('Unable to initialize the travel map:', error); }
+  }
+}
+
+// Keep location display formatting independent from window.location.
+function locationHash() { return window.location.hash; }
+
+menuButton.addEventListener('click', () => {
+  const opened = menuButton.getAttribute('aria-expanded') !== 'true';
+  menuButton.setAttribute('aria-expanded', String(opened)); menuButton.setAttribute('aria-label', opened?'Close navigation':'Open navigation'); nav.classList.toggle('is-open', opened);
+});
+document.addEventListener('keydown',(event)=>{ if(event.key==='Escape') closeMenu(); });
+document.addEventListener('click',(event)=>{
+  if (event.target.closest('.skip-link')) { event.preventDefault(); main.focus(); main.scrollIntoView(); return; }
+  if (event.target.closest('#primary-navigation a')) closeMenu();
+  const filter = event.target.closest('[data-map-category]');
+  if (filter) {
+    mapCategory = filter.dataset.mapCategory;
+    const items = mapCategory === 'all' ? entries : filterEntries(entries, { category:mapCategory });
+    document.querySelectorAll('[data-map-category]').forEach((button)=>button.setAttribute('aria-pressed',String(button === filter)));
+    activeMap?.setEntries(items); activeMap?.reset();
+    document.querySelector('#map-places').innerHTML = mapPlaces(mapCategory === 'all' ? cities : items);
+    document.querySelector('#map-count').textContent = `${items.length} saved places`;
+  }
+  const focusButton = event.target.closest('[data-focus-place]');
+  if (focusButton) activeMap?.focus(focusButton.dataset.focusPlace);
+  if (event.target.closest('#reset-map')) activeMap?.reset();
+  if (event.target.closest('#clear-filters')) {
+    collectionFilters = { city:'all', search:'' }; document.querySelector('#collection-search').value=''; document.querySelector('#city-filter').value='all'; updateCollection(parseRoute(locationHash()).page);
+  }
+});
+document.addEventListener('input',(event)=>{ if(event.target.id === 'collection-search'){ collectionFilters.search=event.target.value; updateCollection(parseRoute(locationHash()).page); } });
+document.addEventListener('change',(event)=>{ if(event.target.id === 'city-filter'){ collectionFilters.city=event.target.value; updateCollection(parseRoute(locationHash()).page); } });
+document.addEventListener('error',(event)=>{ if(event.target instanceof HTMLImageElement) event.target.classList.add('image-failed'); },true);
+window.addEventListener('hashchange',renderRoute);
+renderRoute();

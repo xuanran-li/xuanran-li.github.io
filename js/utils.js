@@ -6,6 +6,19 @@ export function journalUrl(id) {
   return `#/journal/${encodeURIComponent(id)}`;
 }
 
+// 国家/地区显示名称与旗帜；新增国家时在这里补充，原始 country 值用于筛选。
+const countryFlags = new Map([
+  ['China', '🇨🇳'], ['Hong Kong SAR', '🇭🇰'], ['Macau SAR', '🇲🇴'],
+  ['Vietnam', '🇻🇳'], ['Cambodia', '🇰🇭'], ['Thailand', '🇹🇭'],
+  ['Laos', '🇱🇦'], ['Singapore', '🇸🇬'], ['Malaysia', '🇲🇾'], ['Brunei', '🇧🇳'],
+]);
+
+export function countryLabel(country = '') {
+  const name = String(country ?? '');
+  const flag = countryFlags.get(name);
+  return flag ? `${flag} ${name}` : name;
+}
+
 // Google Maps 外链与详情页小地图共用同一个查询；也可在 data.js 单独填写分享链接。
 function mapsQuery(entry) {
   return entry.googleMapsQuery?.trim()
@@ -46,9 +59,10 @@ export function parseRoute(hash) {
   return { page: validDepth ? parts[0] || 'home' : 'not-found', id, params: new URLSearchParams(query) };
 }
 
-export function filterEntries(entries, { category, city = 'all', search = '' } = {}) {
+export function filterEntries(entries, { category, country = 'all', city = 'all', search = '' } = {}) {
   const query = search.trim().toLocaleLowerCase();
   return entries.filter((entry) => (!category || entry.category === category)
+    && (country === 'all' || entry.country === country)
     && (city === 'all' || entry.cityId === city)
     && (!query || [entry.title, entry.city, entry.country, entry.excerpt, ...(entry.tags || [])].join(' ').toLocaleLowerCase().includes(query)));
 }

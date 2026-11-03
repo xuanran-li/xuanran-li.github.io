@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access } from 'node:fs/promises';
 import { categories, entries, imageCredits, entryUrl } from '../js/data.js';
-import { filterEntries, journalUrl, parseRoute, escapeHtml, googleMapsUrl, googleMapsEmbedUrl } from '../js/utils.js';
+import { filterEntries, journalUrl, parseRoute, escapeHtml, googleMapsUrl, googleMapsEmbedUrl, countryLabel } from '../js/utils.js';
 
 const siteRoot = new URL('../', import.meta.url);
 const han = /\p{Script=Han}/u;
@@ -28,8 +28,8 @@ test('the requested cities keep their exact names, country labels and order', ()
   const cities = entries.filter((entry) => entry.category === 'cities');
   assert.deepEqual(cities.map(({ city, country }) => [city, country]), requestedCities);
   assert.deepEqual(categories.map(({ id, label }) => [id, label]), [
-    ['cities', 'Cities'], ['food', 'Food & Drinks'],
-    ['attractions', 'Attractions'], ['stays', 'Accommodations'],
+    ['cities', '城市'], ['attractions', '胜地'],
+    ['food', '饮食'], ['stays', '膳宿'],
   ]);
   assert.equal(entries.length, requestedCities.length * 4);
   for (const city of cities) {
@@ -108,6 +108,35 @@ test('combined category, city and search filters keep only matching records', ()
   assert.equal(filterEntries(entries, { category: 'food', search: '咖啡' }).length, requestedCities.length);
   assert.deepEqual(filterEntries(entries, { search: 'this-place-does-not-exist' }), []);
   assert.deepEqual(filterEntries(entries, { search: '   ' }), entries);
+});
+
+test('country filters include every matching city and combine with category and search', () => {
+  const chineseCities = filterEntries(entries, { category: 'cities', country: 'China' });
+  assert.equal(chineseCities.length, 13);
+  assert.ok(chineseCities.some(({ id }) => id === 'hefei'));
+  assert.ok(chineseCities.some(({ id }) => id === 'kunming'));
+  assert.ok(chineseCities.every(({ country }) => country === 'China'));
+  assert.equal(filterEntries(entries, { country: 'China' }).length, 52);
+  const malaysiaStays = filterEntries(entries, { category: 'stays', country: 'Malaysia' });
+  assert.deepEqual(malaysiaStays.map(({ city }) => city), ['Johor Bahru', 'Malacca', 'Kuala Lumpur', 'Penang', 'Kuching', 'Miri', 'Labuan']);
+  assert.deepEqual(filterEntries(entries, { category: 'attractions', country: 'Thailand', search: ' BANGKOK ' }).map(({ id }) => id), ['bangkok-attraction']);
+  assert.deepEqual(filterEntries(entries, { category: 'food', country: 'Malaysia', search: 'Hefei' }), []);
+  assert.deepEqual(filterEntries(entries, { category: 'cities', country: 'Hong Kong SAR' }).map(({ id }) => id), ['hong-kong']);
+  assert.deepEqual(filterEntries(entries, { country: 'unknown-country' }), []);
+  assert.deepEqual(filterEntries(entries, { country: 'all', search: '   ' }), entries);
+  assert.deepEqual(filterEntries(entries, { category: 'food', country: 'all', search: '' }), entries.filter(({ category }) => category === 'food'));
+});
+
+test('country labels show the corresponding flags and preserve unknown names', () => {
+  const expected = [
+    ['China', '🇨🇳 China'], ['Hong Kong SAR', '🇭🇰 Hong Kong SAR'], ['Macau SAR', '🇲🇴 Macau SAR'],
+    ['Vietnam', '🇻🇳 Vietnam'], ['Cambodia', '🇰🇭 Cambodia'], ['Thailand', '🇹🇭 Thailand'],
+    ['Laos', '🇱🇦 Laos'], ['Singapore', '🇸🇬 Singapore'], ['Malaysia', '🇲🇾 Malaysia'], ['Brunei', '🇧🇳 Brunei'],
+  ];
+  for (const [country, label] of expected) assert.equal(countryLabel(country), label);
+  assert.equal(countryLabel('New country'), 'New country');
+  assert.equal(countryLabel('toString'), 'toString');
+  assert.equal(countryLabel(), '');
 });
 
 test('article text is escaped before insertion into HTML templates', () => {

@@ -1,11 +1,30 @@
 import { entries, categories } from './data.js';
 import { createTravelMap } from './map.js';
-import { escapeHtml as esc, journalUrl, parseRoute, filterEntries, googleMapsUrl, googleMapsEmbedUrl } from './utils.js';
+import { escapeHtml as esc, journalUrl, parseRoute, filterEntries, countryLabel, googleMapsUrl, googleMapsEmbedUrl } from './utils.js';
 
 // 页面职责：首页 renderHome、分类 renderCollection、城市/地点详情 renderArticle。
 // 正文、照片、评分和 Google Maps 链接在 data.js 的对应城市分块中修改。
 // 首页底部精选：把这里的 ID 改成任何已有记录 ID（城市 ID + -food / -stay / -attraction）。
 const featuredIds = ['hefei-food', 'huangshan-attraction', 'singapore-stay'];
+
+// 首页文案：诗歌保留原有分行；标题、作者与正文可在这里分别编辑。
+const siteName = '十一十一‘s Travel Blog';
+const homeThemes = ['历史', '人文', '社会', '纪实', '穷游指南'];
+const homePoem = {
+  title: '礼物',
+  lines: [
+    '如此幸福的一天。',
+    '雾一早就散了，我在花园里干活。',
+    '蜂乌停在忍冬花上，',
+    '这世上没有一样东西我想占有。',
+    '我知道没有一个人值得我羡慕。',
+    '任何我曾遭受的不幸，我都已忘记。',
+    '想到故我今我同为一个并不使人难为情。',
+    '在我身上没有痛苦。',
+    '直起腰来，我看见蓝色的大海和帆影。',
+  ],
+  author: '— [波兰] 切斯瓦夫•米沃什',
+};
 
 const icons = {
   pin: '<path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
@@ -38,10 +57,11 @@ const nav = document.querySelector('#primary-navigation');
 let activeMap = null;
 let routeVersion = 0;
 let mapCategory = 'all';
-let collectionFilters = { city: 'all', search: '' };
+let collectionFilters = { country: 'all', search: '' };
 
 function categoryLabel(id) { return categories.find((category) => category.id === id)?.label || 'Journal'; }
 function location(entry) { return `${entry.city}, ${entry.country}`; }
+function cardLocation(entry) { return entry.category === 'cities' ? countryLabel(entry.country) : `${entry.city} · ${countryLabel(entry.country)}`; }
 function dot(category) { return `<span class="category-dot" style="--category-color:${categoryColors[category]}"></span>`; }
 function rating(entry) { return `${icon('star', 12)} ${Number(entry.rating).toFixed(1)}`; }
 function image(entry, className = '', lazy = true) {
@@ -50,7 +70,7 @@ function image(entry, className = '', lazy = true) {
 function card(entry) {
   return `<a class="story-card" href="${journalUrl(entry.id)}" aria-label="${esc(entry.title)} — ${esc(location(entry))}, rated ${entry.rating} out of 5">
     <div class="card-image-wrap">${image(entry, 'card-image')}<span class="card-type">${dot(entry.category)}${esc(categoryLabel(entry.category))}</span><span class="card-rating">${rating(entry)} <span>/ 5</span></span></div>
-    <div class="card-content"><div class="card-location">${icon('pin', 12)} ${esc(location(entry))}</div><h3>${esc(entry.title)}</h3><p class="card-excerpt" lang="zh-CN">${esc(entry.excerpt)}</p><span class="card-read">Read story ${icon('arrow', 13)}</span></div>
+    <div class="card-content"><div class="card-location">${esc(cardLocation(entry))}</div><h3>${esc(entry.title)}</h3><p class="card-excerpt" lang="zh-CN">${esc(entry.excerpt)}</p><span class="card-read">Read story ${icon('arrow', 13)}</span></div>
   </a>`;
 }
 
@@ -59,31 +79,21 @@ function renderHome() {
   const featured = featuredIds.map((id) => entries.find((entry) => entry.id === id)).filter(Boolean);
   main.innerHTML = `<div class="page home-page">
     <section class="home-intro" aria-labelledby="home-title">
-      <div><div class="eyebrow">Field notes &amp; faraway places</div><h1 id="home-title">A little further,<br><em>a little closer.</em></h1></div>
-      <div class="intro-aside"><p lang="zh-CN">把世界走成自己的地图。<br>记录路过的城市、喜欢的味道，<br>和那些值得停留的日常。</p><div class="intro-stats"><div><strong>${cities.length.toString().padStart(2,'0')}</strong><span>cities</span></div><span class="stat-divider"></span><div><strong>${countries.toString().padStart(2,'0')}</strong><span>countries / regions</span></div><small class="sample-badge">Sample edition</small></div></div>
+      <div class="home-primary"><div class="eyebrow">Field notes &amp; faraway places</div><h1 id="home-title" lang="zh-CN">${homeThemes.map((theme) => `<span class="intro-theme">${esc(theme)}</span>`).join(' ')}</h1><div class="intro-stats"><div><strong>${cities.length.toString().padStart(2,'0')}</strong><span>城市</span></div><span class="stat-divider"></span><div><strong>${countries.toString().padStart(2,'0')}</strong><span>国家 / 地区</span></div></div></div>
+      <div class="intro-aside"><section class="intro-poem" lang="zh-CN" aria-labelledby="poem-title"><h2 id="poem-title">${esc(homePoem.title)}</h2><p class="poem-lines">${homePoem.lines.map(esc).join('<br>')}</p><p class="poem-author">${esc(homePoem.author)}</p></section></div>
     </section>
     <section class="map-section" aria-labelledby="map-heading">
-      <div class="section-top"><h2 id="map-heading" class="section-heading">${icon('compass',20)} The world, bookmarked.</h2><div class="map-filters" role="group" aria-label="Filter map places"><button class="filter-button" data-map-category="all" aria-pressed="true">All places</button>${categories.map((category) => `<button class="filter-button" data-map-category="${category.id}" aria-pressed="false">${dot(category.id)}${esc(category.label)}</button>`).join('')}</div></div>
+      <div class="section-top"><h2 id="map-heading" class="section-heading">${icon('compass',20)} The world, bookmarked.</h2><div class="map-filters" role="group" aria-label="筛选地图地点"><button class="filter-button" data-map-category="all" aria-pressed="true">全部地点</button>${categories.map((category) => `<button class="filter-button" data-map-category="${category.id}" aria-pressed="false">${dot(category.id)}${esc(category.label)}</button>`).join('')}</div></div>
       <div class="map-frame"><div class="map-canvas-wrap"><div id="travel-map" class="travel-map" role="region" aria-label="Interactive map of cities and saved places"></div><button id="reset-map" class="map-reset" disabled>${icon('reset',12)} Reset view</button></div>
-        <aside class="map-side" aria-label="Places on the map"><div class="eyebrow">A pin, a memory</div><h3>Follow the little dots.</h3><p class="map-side-description">Choose a place. Find a story.<br>There's a little more behind every pin.</p><div class="map-places" id="map-places">${mapPlaces(cities)}</div></aside>
       </div>
       <div class="map-footnote"><span>${icon('pin',11)} <span id="map-count">${entries.length} saved places</span> · Select a pin to read its story</span><span id="map-provider" aria-live="polite">Loading map…</span></div>
     </section>
     <section class="journal-section" aria-labelledby="city-list-heading"><div class="section-intro"><div><div class="eyebrow">The city index</div><h2 id="city-list-heading">Places that stayed with me.</h2></div><a class="text-link" href="#/cities">Explore all cities ${icon('arrow',14)}</a></div>
-      <div class="city-list">${cities.map((city,index) => `<a class="city-row" href="${journalUrl(city.id)}"><span class="city-index">${String(index+1).padStart(2,'0')}</span>${image(city,'city-thumb')}<div class="city-row-info"><h3>${esc(city.title)}</h3><p>${esc(location(city))}</p></div><span class="city-row-rating" aria-label="Rated ${city.rating} out of 5">${rating(city)}</span>${icon('northeast',18).replace('<svg','<svg class="city-row-arrow"')}</a>`).join('')}</div>
+      <div class="city-list">${cities.map((city,index) => `<a class="city-row" href="${journalUrl(city.id)}"><span class="city-index">${String(index+1).padStart(2,'0')}</span>${image(city,'city-thumb')}<div class="city-row-info"><h3>${esc(city.title)}</h3><p>${esc(countryLabel(city.country))}</p></div><span class="city-row-rating" aria-label="Rated ${city.rating} out of 5">${rating(city)}</span>${icon('northeast',18).replace('<svg','<svg class="city-row-arrow"')}</a>`).join('')}</div>
     </section>
     <section class="journal-section home-stories" aria-labelledby="stories-heading"><div class="section-intro"><div><div class="eyebrow">Between the destinations</div><h2 id="stories-heading">It's the little things.</h2></div><span class="tiny-label">Good food. Slow days. A place to stay.</span></div><div class="card-grid">${featured.map(card).join('')}</div></section>
     <div class="home-note"><p>Take the long way home.</p><span lang="zh-CN">这是博客的示例篇章。城市、评分与文字仅用于展示，等待被真实的旅行记忆填满。</span></div>
   </div>`;
-}
-
-function noteCount(cityId) {
-  const count = entries.filter((item) => item.cityId === cityId).length;
-  return `${count} ${count === 1 ? 'note' : 'notes'}`;
-}
-
-function mapPlaces(items) {
-  return items.map((entry) => `<button class="map-place" data-focus-place="${esc(entry.id)}" aria-label="Show ${esc(entry.title)} on the map"><span class="map-place-icon">${icon(categoryIcon[entry.category],13)}</span><span class="map-place-info"><span class="map-place-name">${esc(entry.title)}</span><span class="map-place-country">${esc(location(entry))}</span></span><span class="map-place-count">${entry.category === 'cities' ? noteCount(entry.id) : Number(entry.rating).toFixed(1) + ' ★'}</span></button>`).join('');
 }
 
 async function initializeMap(version, focusId) {
@@ -108,10 +118,10 @@ async function initializeMap(version, focusId) {
 
 function renderCollection(category) {
   const items = entries.filter((entry) => entry.category === category.id);
-  const relevantCities = cities.filter((city) => items.some((entry) => entry.cityId === city.id));
-  main.innerHTML = `<div class="page collection-page"><div class="breadcrumb"><a href="#/">Home</a>${icon('chevron',11)}<span>${esc(category.label)}</span></div>
+  const relevantCountries = [...new Set(items.map((entry) => entry.country))];
+  main.innerHTML = `<div class="page collection-page"><div class="breadcrumb"><a href="#/">总览</a>${icon('chevron',11)}<span>${esc(category.label)}</span></div>
     <section class="collection-hero"><div><div class="eyebrow">The collection · ${String(categories.indexOf(category)+1).padStart(2,'0')}</div><h1>${esc(category.label)}<sup>${String(items.length).padStart(2,'0')}</sup></h1><p lang="zh-CN">${descriptions[category.id]}</p></div><div class="collection-art" aria-hidden="true">${icon(categoryIcon[category.id],44)}</div></section>
-    <div class="collection-toolbar"><div class="collection-controls"><label class="search-field">${icon('search',15)}<input type="search" id="collection-search" placeholder="Search places…" aria-label="Search ${esc(category.label)}" /></label><select class="city-select" id="city-filter" aria-label="Filter by city"><option value="all">All cities</option>${relevantCities.map((city) => `<option value="${esc(city.id)}">${esc(city.title)}</option>`).join('')}</select></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
+    <div class="collection-toolbar"><div class="collection-controls"><label class="search-field">${icon('search',15)}<input type="search" id="collection-search" placeholder="搜索地点…" aria-label="搜索${esc(category.label)}" /></label><select class="country-select" id="country-filter" aria-label="按国家或地区筛选"><option value="all">全部国家 / 地区</option>${relevantCountries.map((country) => `<option value="${esc(country)}">${esc(countryLabel(country))}</option>`).join('')}</select></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
     <div id="collection-grid" class="card-grid"></div><p class="collection-note">${icon('compass',13)} Sample edition · Personal ratings are out of 5. All entries are illustrative.</p>
   </div>`;
   updateCollection(category.id);
@@ -119,8 +129,8 @@ function renderCollection(category) {
 
 function updateCollection(category) {
   const items = filterEntries(entries, { category, ...collectionFilters });
-  document.querySelector('#result-count').textContent = `${String(items.length).padStart(2,'0')} ${items.length === 1 ? 'story' : 'stories'} in this collection`;
-  document.querySelector('#collection-grid').innerHTML = items.length ? items.map(card).join('') : `<div class="empty-state"><h2>No places found.</h2><p>Try another city or a different search.</p><button class="solid-button" id="clear-filters">Clear filters ${icon('reset',13)}</button></div>`;
+  document.querySelector('#result-count').textContent = `共 ${items.length} 篇记录`;
+  document.querySelector('#collection-grid').innerHTML = items.length ? items.map(card).join('') : `<div class="empty-state"><h2>没有找到相关地点</h2><p>试试其他国家或地区，或更换搜索词。</p><button class="solid-button" id="clear-filters">重置筛选 ${icon('reset',13)}</button></div>`;
 }
 
 // 所有城市和地点共用地图操作区；Google 预览不可用时仍保留两个独立链接。
@@ -138,12 +148,12 @@ function articleMap(entry) {
 function renderArticle(entry) {
   const related = entries.filter((item) => item.id !== entry.id && item.cityId === entry.cityId);
   const formattedDate = new Intl.DateTimeFormat('en',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${entry.date}T12:00:00Z`));
-  main.innerHTML = `<article class="page article-page"><div class="breadcrumb"><a href="#/">Home</a>${icon('chevron',11)}<a href="#/${entry.category}">${esc(categoryLabel(entry.category))}</a>${icon('chevron',11)}<span>${esc(entry.title)}</span></div>
+  main.innerHTML = `<article class="page article-page"><div class="breadcrumb"><a href="#/">总览</a>${icon('chevron',11)}<a href="#/${entry.category}">${esc(categoryLabel(entry.category))}</a>${icon('chevron',11)}<span>${esc(entry.title)}</span></div>
     <header class="article-header"><div class="eyebrow">${esc(categoryLabel(entry.category))} · A travel journal</div><h1>${esc(entry.title)}</h1><p class="article-subtitle">${esc(entry.subtitle || '')}</p><div class="article-meta"><span>${icon('pin',13)}${esc(location(entry))}</span><span>${icon('calendar',13)}<time datetime="${esc(entry.date)}">${formattedDate}</time></span><small class="sample-badge">Sample story</small></div></header>
     ${image(entry,'article-cover',false)}<p class="article-caption">${esc(entry.imageAlt || entry.title)} · Illustrative photography</p>
     <div class="article-layout"><div class="article-body"><p class="article-lede" lang="zh-CN">${esc(entry.excerpt)}</p>${entry.content.map((section,index) => `<section class="article-section"><h2><small>${String(index+1).padStart(2,'0')}</small>${esc(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p lang="zh-CN">${esc(paragraph)}</p>`).join('')}</section>`).join('')}
       ${entry.gallery?.length ? `<div class="article-gallery">${entry.gallery.map((photo) => `<figure><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy" /><figcaption>${esc(photo.caption || photo.alt)}</figcaption></figure>`).join('')}</div>` : ''}
-      <a href="#/${entry.category}" class="text-link article-back">${icon('arrow',14).replace('<svg','<svg style="transform:rotate(180deg)"')} Back to ${esc(categoryLabel(entry.category))}</a></div>
+      <a href="#/${entry.category}" class="text-link article-back">${icon('arrow',14).replace('<svg','<svg style="transform:rotate(180deg)"')} 返回${esc(categoryLabel(entry.category))}</a></div>
       <aside class="article-sidebar"><div class="details-box"><h2>The field notes</h2><dl><div class="detail-row"><dt>Location</dt><dd>${esc(location(entry))}</dd></div><div class="detail-row"><dt>My rating · Sample</dt><dd class="detail-rating">${icon('star',18)}<strong>${Number(entry.rating).toFixed(1)}</strong> / 5</dd></div><div class="detail-row"><dt>Coordinates</dt><dd>${Math.abs(entry.coordinates[0]).toFixed(3)}° ${entry.coordinates[0]>=0?'N':'S'}, ${Math.abs(entry.coordinates[1]).toFixed(3)}° ${entry.coordinates[1]>=0?'E':'W'}</dd></div></dl>${articleMap(entry)}<div class="tags">${(entry.tags || []).map((tag)=>`<span class="tag">${esc(tag)}</span>`).join('')}</div></div></aside>
     </div>
     ${related.length ? `<section class="article-related"><div class="section-intro"><div><div class="eyebrow">Keep wandering</div><h2>More from ${esc(entry.city)}.</h2></div></div><div class="card-grid">${related.map(card).join('')}</div></section>`:''}
@@ -165,10 +175,10 @@ async function renderRoute() {
   const category = categories.find((item)=>item.id === route.page);
   const article = route.page === 'journal' ? entries.find((entry)=>entry.id === route.id) : null;
   closeMenu();
-  mapCategory = 'all'; collectionFilters = { city:'all', search:'' };
+  mapCategory = 'all'; collectionFilters = { country:'all', search:'' };
   document.querySelectorAll('[data-nav]').forEach((link) => { const current = link.dataset.nav === (article?.category || route.page); if(current) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
   if (route.page === 'home') renderHome(); else if(category) renderCollection(category); else if(article) renderArticle(article); else renderNotFound();
-  document.title = `${article?.title || category?.label || (route.page === 'home' ? 'A personal travel atlas' : 'Story not found')} — 十一十一‘s Blog`;
+  document.title = route.page === 'home' ? siteName : `${article?.title || category?.label || '页面未找到'} — ${siteName}`;
   window.scrollTo({top:0,behavior:'instant'});
   if (version > 1) main.focus({preventScroll:true});
   if (route.page === 'home') {
@@ -194,18 +204,15 @@ document.addEventListener('click',(event)=>{
     const items = mapCategory === 'all' ? entries : filterEntries(entries, { category:mapCategory });
     document.querySelectorAll('[data-map-category]').forEach((button)=>button.setAttribute('aria-pressed',String(button === filter)));
     activeMap?.setEntries(items); activeMap?.reset();
-    document.querySelector('#map-places').innerHTML = mapPlaces(mapCategory === 'all' ? cities : items);
     document.querySelector('#map-count').textContent = `${items.length} saved places`;
   }
-  const focusButton = event.target.closest('[data-focus-place]');
-  if (focusButton) activeMap?.focus(focusButton.dataset.focusPlace);
   if (event.target.closest('#reset-map')) activeMap?.reset();
   if (event.target.closest('#clear-filters')) {
-    collectionFilters = { city:'all', search:'' }; document.querySelector('#collection-search').value=''; document.querySelector('#city-filter').value='all'; updateCollection(parseRoute(locationHash()).page);
+    collectionFilters = { country:'all', search:'' }; document.querySelector('#collection-search').value=''; document.querySelector('#country-filter').value='all'; updateCollection(parseRoute(locationHash()).page);
   }
 });
 document.addEventListener('input',(event)=>{ if(event.target.id === 'collection-search'){ collectionFilters.search=event.target.value; updateCollection(parseRoute(locationHash()).page); } });
-document.addEventListener('change',(event)=>{ if(event.target.id === 'city-filter'){ collectionFilters.city=event.target.value; updateCollection(parseRoute(locationHash()).page); } });
+document.addEventListener('change',(event)=>{ if(event.target.id === 'country-filter'){ collectionFilters.country=event.target.value; updateCollection(parseRoute(locationHash()).page); } });
 document.addEventListener('error',(event)=>{ if(event.target instanceof HTMLImageElement) event.target.classList.add('image-failed'); },true);
 window.addEventListener('hashchange',renderRoute);
 renderRoute();

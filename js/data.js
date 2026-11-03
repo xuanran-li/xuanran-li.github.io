@@ -1,8 +1,8 @@
 /**
  * 项目内容编辑入口：地图、城市列表、分类卡片和详情页都读取这里。
  * 快速定位：搜索 “CITY: Hefei” 等英文城市名，再编辑下面的四个内容块：
- *   cityStory = 城市介绍；food = Food & Drinks；
- *   accommodation = Accommodations；attraction = Attractions。
+ *   cityStory = 城市介绍；food = 饮食；
+ *   accommodation = 膳宿；attraction = 胜地。
  * 每块的 title / excerpt / content / image 可分别修改标题、摘要、正文和图片。
  * 图片路径相对网站根目录；coordinates 为 [纬度, 经度]，rating 为 0–5。
  * googleMapsQuery 控制 Google Maps 搜索；可添加 googleMapsUrl 指定分享链接，
@@ -14,10 +14,10 @@
  * 为新增对象填写独立 id。每个对象都可以覆盖文末 entryDefaults 的默认值。
  */
 export const categories = [
-  { id: 'cities', label: 'Cities', singular: 'City', description: 'A collection of places, and the moments in between.' },
-  { id: 'food', label: 'Food & Drinks', singular: 'Food & Drinks', description: 'Good coffee, long lunches, and a taste of somewhere new.' },
-  { id: 'attractions', label: 'Attractions', singular: 'Attraction', description: 'Places to explore, little discoveries, and a reason to wander.' },
-  { id: 'stays', label: 'Accommodations', singular: 'Accommodation', description: 'A place to put down your bags and feel a little at home.' },
+  { id: 'cities', label: '城市', singular: '城市', description: 'A collection of places, and the moments in between.' },
+  { id: 'attractions', label: '胜地', singular: '胜地', description: 'Places to explore, little discoveries, and a reason to wander.' },
+  { id: 'food', label: '饮食', singular: '饮食', description: 'Good coffee, long lunches, and a taste of somewhere new.' },
+  { id: 'stays', label: '膳宿', singular: '膳宿', description: 'A place to put down your bags and feel a little at home.' },
 ];
 
 // ===== 城市与地点内容：每个 CITY 区块都可独立编辑 =====

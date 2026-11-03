@@ -8,6 +8,7 @@
   --line:#dedfd5;
   --white:#fffefa;
   --serif:'DM Serif Display',Georgia,'Times New Roman',serif;
+  --cjk-serif:'Songti SC','STSong','SimSun',serif;
   --sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif
 }
 
@@ -193,44 +194,81 @@ h1,h2,h3 {
   background:var(--green)
 }
 
+/* 首页：左侧主题与统计，右侧《礼物》；诗行由 app.js 中的换行控制。 */
 .home-intro {
-  display:flex;
-  justify-content:space-between;
-  gap:45px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(350px,480px);
+  gap:clamp(40px,6vw,84px);
   align-items:center;
-  padding:55px 0 42px
+  padding:52px 0 48px
+}
+
+.home-primary {
+  min-width:0
 }
 
 .home-intro h1 {
-  font-family:var(--serif);
-  font-size:60px;
-  line-height:1.07;
-  letter-spacing:-1.9px;
-  margin-top:19px
+  display:grid;
+  grid-template-columns:repeat(2,max-content);
+  gap:12px 30px;
+  font-family:var(--cjk-serif);
+  font-size:56px;
+  font-weight:500;
+  line-height:1.35;
+  letter-spacing:.12em;
+  margin-top:24px
 }
 
-.home-intro h1 em {
-  font-weight:400;
-  color:var(--green)
+.intro-theme {
+  white-space:nowrap
+}
+
+.intro-theme:last-child {
+  grid-column:1/-1;
+  color:var(--green);
+  font-size:.8em;
+  padding-top:4px
 }
 
 .intro-aside {
-  width:308px;
-  padding-top:32px
+  min-width:0;
+  width:100%
 }
 
-.intro-aside p {
-  font-size:13px;
-  color:#6c7267;
+.intro-poem {
+  border-left:1px solid var(--line);
+  padding-left:30px
+}
+
+.intro-poem h2 {
+  font-family:var(--cjk-serif);
+  font-size:28px;
+  letter-spacing:.18em;
+  color:var(--green);
+  margin-bottom:14px
+}
+
+.poem-lines {
+  font-family:var(--cjk-serif);
+  font-size:14px;
+  color:#60695b;
   line-height:2.1;
-  letter-spacing:.35px
+  letter-spacing:.12px
+}
+
+.poem-author {
+  margin-top:14px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+  text-align:right
 }
 
 .intro-stats {
   display:flex;
   align-items:center;
   gap:21px;
-  margin-top:24px
+  margin-top:28px
 }
 
 .intro-stats strong {
@@ -334,12 +372,11 @@ h1,h2,h3 {
 }
 
 .map-frame {
-  height:432px;
+  height:clamp(420px,46vw,600px);
   border:1px solid #d7dccf;
   border-radius:8px;
   overflow:hidden;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 245px;
+  display:block;
   background:#e5eade
 }
 
@@ -370,97 +407,6 @@ h1,h2,h3 {
   padding:9px 11px;
   font-size:10px;
   box-shadow:0 2px 8px #203c3810
-}
-
-.map-side {
-  background:var(--white);
-  padding:23px 20px;
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-  z-index:1;
-  border-left:1px solid var(--line)
-}
-
-.map-side .eyebrow {
-  font-size:9px;
-  letter-spacing:1.8px
-}
-
-.map-side .eyebrow:before {
-  display:none
-}
-
-.map-side h3 {
-  font-family:var(--serif);
-  font-size:24px;
-  margin:10px 0 6px
-}
-
-.map-side-description {
-  font-size:10px;
-  color:var(--muted);
-  line-height:1.7
-}
-
-.map-places {
-  margin:18px 0 0;
-  overflow:auto;
-  flex:1;
-  scrollbar-width:thin
-}
-
-.map-place {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  width:100%;
-  border:0;
-  border-top:1px solid #eeeee7;
-  background:none;
-  padding:11px 0;
-  text-align:left
-}
-
-.map-place:hover .map-place-name {
-  color:var(--green);
-  text-decoration:underline
-}
-
-.map-place-icon {
-  height:27px;
-  width:27px;
-  background:var(--pale);
-  border-radius:50%;
-  color:var(--green);
-  display:grid;
-  place-items:center;
-  flex-shrink:0
-}
-
-.map-place-info {
-  flex:1;
-  min-width:0
-}
-
-.map-place-name {
-  font-size:12px;
-  display:block;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis
-}
-
-.map-place-country {
-  display:block;
-  font-size:9px;
-  color:var(--muted);
-  margin-top:3px
-}
-
-.map-place-count {
-  font-size:9px;
-  color:var(--muted)
 }
 
 .map-footnote {
@@ -857,14 +803,15 @@ h1,h2,h3 {
   outline-offset:2px
 }
 
-.city-select {
+.country-select {
   background:var(--white);
   border:1px solid #d9ddd1;
   border-radius:4px;
   font-size:11px;
   padding:11px 30px 11px 13px;
   color:#66705e;
-  max-width:180px
+  min-width:190px;
+  max-width:240px
 }
 
 .result-count {
@@ -1219,9 +1166,6 @@ h1,h2,h3 {
   .header-inner,.page {
     max-width:1450px
   }
-  .map-frame {
-    height:480px
-  }
   .site-footer {
     max-width:1322px
   }
@@ -1250,16 +1194,8 @@ h1,h2,h3 {
     margin-right:36px
   }
   .home-intro h1 {
-    font-size:54px
-  }
-  .intro-aside {
-    width:278px
-  }
-  .map-frame {
-    grid-template-columns:minmax(0,1fr) 215px
-  }
-  .map-side {
-    padding:20px 16px
+    font-size:50px;
+    gap:10px 24px
   }
   .section-top {
     gap:12px
@@ -1322,17 +1258,19 @@ h1,h2,h3 {
     bottom:17px
   }
   .home-intro {
-    padding-top:40px;
-    gap:30px
+    grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+    padding-top:36px;
+    gap:28px
   }
   .home-intro h1 {
-    font-size:47px
+    font-size:42px;
+    gap:10px 20px
   }
-  .intro-aside {
-    width:235px
+  .intro-poem {
+    padding-left:20px
   }
-  .intro-aside p {
-    font-size:12px
+  .poem-lines {
+    font-size:13px
   }
   .intro-stats {
     gap:10px
@@ -1345,23 +1283,7 @@ h1,h2,h3 {
     padding:5px
   }
   .map-frame {
-    height:390px;
-    grid-template-columns:minmax(0,1fr) 190px
-  }
-  .map-side {
-    padding:19px 14px
-  }
-  .map-side h3 {
-    font-size:21px
-  }
-  .map-side-description {
-    font-size:9px
-  }
-  .map-side .eyebrow {
-    font-size:8px
-  }
-  .map-place-country {
-    font-size:8px
+    height:420px
   }
   .section-heading {
     font-size:14px
@@ -1440,18 +1362,26 @@ h1,h2,h3 {
 @media(max-width:640px) {
   .header-inner {
     height:74px;
-    padding:0 22px
+    padding:0 18px;
+    gap:10px
   }
   .brand {
-    font-size:19px
+    font-size:clamp(14px,4.1vw,19px);
+    gap:7px;
+    letter-spacing:-.5px
+  }
+  .brand img {
+    width:27px;
+    height:27px
   }
   .menu-toggle {
     display:flex;
     flex-direction:column;
     justify-content:center;
     gap:6px;
-    width:36px;
-    height:36px;
+    width:34px;
+    height:34px;
+    flex-shrink:0;
     padding:7px;
     background:none;
     border:1px solid #d8ddd1;
@@ -1509,18 +1439,29 @@ h1,h2,h3 {
     letter-spacing:1.8px
   }
   .home-intro h1 {
-    font-size:47px;
-    margin-top:17px;
-    letter-spacing:-1.5px
+    font-size:40px;
+    margin-top:20px;
+    letter-spacing:.1em;
+    gap:8px 26px
   }
   .intro-aside {
-    padding-top:22px;
-    width:auto
+    padding-top:30px
   }
-  .intro-aside p {
-    font-size:11px;
-    line-height:1.9;
-    max-width:335px
+  .intro-poem {
+    border-left:0;
+    border-top:1px solid var(--line);
+    padding:25px 0 0
+  }
+  .intro-poem h2 {
+    font-size:25px;
+    margin-bottom:12px
+  }
+  .poem-lines {
+    font-size:clamp(12px,3.2vw,14px);
+    line-height:2.05
+  }
+  .poem-author {
+    font-size:10px
   }
   .intro-stats {
     margin-top:17px;
@@ -1554,51 +1495,8 @@ h1,h2,h3 {
     padding:7px 8px
   }
   .map-frame {
-    height:auto;
-    display:block;
+    height:400px;
     border-radius:6px
-  }
-  .map-canvas-wrap {
-    height:350px
-  }
-  .map-side {
-    border-left:0;
-    border-top:1px solid var(--line);
-    padding:16px 17px
-  }
-  .map-side h3,.map-side-description {
-    display:none
-  }
-  .map-side .eyebrow {
-    font-size:8px
-  }
-  .map-places {
-    display:flex;
-    gap:12px;
-    margin-top:11px;
-    overflow:auto;
-    padding-bottom:2px
-  }
-  .map-place {
-    flex-shrink:0;
-    width:auto;
-    gap:7px;
-    padding:0;
-    border:0;
-    max-width:175px
-  }
-  .map-place-icon {
-    width:25px;
-    height:25px
-  }
-  .map-place-name {
-    font-size:10px
-  }
-  .map-place-country {
-    font-size:8px
-  }
-  .map-place-count {
-    display:none
   }
   .map-reset {
     top:12px;
@@ -1777,19 +1675,23 @@ h1,h2,h3 {
     gap:12px
   }
   .collection-controls {
-    gap:9px
+    gap:9px;
+    flex-wrap:wrap
   }
   .search-field {
     padding:10px;
-    max-width:none
+    max-width:none;
+    flex-basis:100%
   }
   .search-field input {
     font-size:10px
   }
-  .city-select {
-    font-size:10px;
-    padding:10px 5px;
-    max-width:114px
+  .country-select {
+    font-size:11px;
+    padding:10px;
+    min-width:0;
+    max-width:none;
+    width:100%
   }
   .result-count {
     font-size:9px

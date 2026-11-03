@@ -8,9 +8,9 @@ export function journalUrl(id) {
 
 // 国家/地区显示名称与旗帜；新增国家时在这里补充，原始 country 值用于筛选。
 const countryFlags = new Map([
-  ['China', '🇨🇳'], ['Hong Kong SAR', '🇭🇰'], ['Macau SAR', '🇲🇴'],
-  ['Vietnam', '🇻🇳'], ['Cambodia', '🇰🇭'], ['Thailand', '🇹🇭'],
-  ['Laos', '🇱🇦'], ['Singapore', '🇸🇬'], ['Malaysia', '🇲🇾'], ['Brunei', '🇧🇳'],
+  ['中国', '🇨🇳'], ['香港特别行政区', '🇭🇰'], ['澳门特别行政区', '🇲🇴'],
+  ['越南', '🇻🇳'], ['柬埔寨', '🇰🇭'], ['泰国', '🇹🇭'],
+  ['老挝', '🇱🇦'], ['新加坡', '🇸🇬'], ['马来西亚', '🇲🇾'], ['文莱', '🇧🇳'],
 ]);
 
 export function countryLabel(country = '') {
@@ -19,7 +19,7 @@ export function countryLabel(country = '') {
   return flag ? `${flag} ${name}` : name;
 }
 
-// Google Maps 外链与详情页小地图共用同一个查询；也可在 data.js 单独填写分享链接。
+// 谷歌地图外链与详情页小地图共用同一个查询；也可在 data.js 单独填写分享链接。
 function mapsQuery(entry) {
   return entry.googleMapsQuery?.trim()
     || [entry.category === 'cities' ? '' : entry.title, entry.city, entry.country].filter(Boolean).join(', ');
@@ -43,9 +43,9 @@ export function googleMapsUrl(entry) {
 }
 
 export function googleMapsEmbedUrl(entry) {
-  // googleMapsEmbedUrl 可粘贴 Google Maps → Share → Embed a map 中 iframe 的 src。
+  // googleMapsEmbedUrl 可粘贴谷歌地图 → 分享 → 嵌入地图中 iframe 的 src。
   return validGoogleMapsUrl(entry.googleMapsEmbedUrl, true)
-    || `https://www.google.com/maps?${new URLSearchParams({ q: mapsQuery(entry), output: 'embed', hl: 'en', z: entry.category === 'cities' ? '11' : '14' })}`;
+    || `https://www.google.com/maps?${new URLSearchParams({ q: mapsQuery(entry), output: 'embed', hl: 'zh-CN', z: entry.category === 'cities' ? '11' : '14' })}`;
 }
 
 export function parseRoute(hash) {

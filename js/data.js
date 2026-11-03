@@ -1,12 +1,12 @@
 /**
  * 项目内容编辑入口：地图、城市列表、分类卡片和详情页都读取这里。
- * 快速定位：搜索 “CITY: Hefei” 等英文城市名，再编辑下面的四个内容块：
+ * 快速定位：搜索“合肥”等中文城市名，或保留的 “CITY: Hefei” 英文注释，再编辑下面的四个内容块：
  *   cityStory = 城市介绍；food = 饮食；
  *   accommodation = 膳宿；attraction = 胜地。
  * 每块的 title / excerpt / content / image 可分别修改标题、摘要、正文和图片。
  * 图片路径相对网站根目录；coordinates 为 [纬度, 经度]，rating 为 0–5。
- * googleMapsQuery 控制 Google Maps 搜索；可添加 googleMapsUrl 指定分享链接，
- * 或添加 googleMapsEmbedUrl 指定 Google Maps “嵌入地图”中的 iframe src。
+ * googleMapsQuery 控制 谷歌地图 搜索；可添加 googleMapsUrl 指定分享链接，
+ * 或添加 googleMapsEmbedUrl 指定 谷歌地图 “嵌入地图”中的 iframe src。
  * 各示例的坐标是城市周边的近似位置，特意错开以便点击，不是真实商户地址。
  * 所有文案、评分、日期和配图均为示例；照片不代表对应城市或商户的实景。
  * 城市顺序就是这里的顺序。id 关联地图、卡片和 #/journal/<id>，请尽量保持稳定。
@@ -14,1689 +14,1689 @@
  * 为新增对象填写独立 id。每个对象都可以覆盖文末 entryDefaults 的默认值。
  */
 export const categories = [
-  { id: 'cities', label: '城市', singular: '城市', description: 'A collection of places, and the moments in between.' },
-  { id: 'attractions', label: '胜地', singular: '胜地', description: 'Places to explore, little discoveries, and a reason to wander.' },
-  { id: 'food', label: '饮食', singular: '饮食', description: 'Good coffee, long lunches, and a taste of somewhere new.' },
-  { id: 'stays', label: '膳宿', singular: '膳宿', description: 'A place to put down your bags and feel a little at home.' },
+  { id: 'cities', label: '城市', singular: '城市', description: '收藏沿途的城市，也收藏旅途中的片刻。' },
+  { id: 'attractions', label: '胜地', singular: '胜地', description: '记录值得探索的风景，以及转角处的小小发现。' },
+  { id: 'food', label: '饮食', singular: '饮食', description: '一杯好咖啡，一顿慢午餐，尝一尝异乡的味道。' },
+  { id: 'stays', label: '膳宿', singular: '膳宿', description: '放下行囊，在旅途中找到暂时的家。' },
 ];
 
 // ===== 城市与地点内容：每个 CITY 区块都可独立编辑 =====
 export const cityGuides = [
   // ===== 01 · CITY: Hefei, China · 合肥 =====
   {
-    id: "hefei", city: "Hefei", country: "China",
+    id: "hefei", city: "合肥", country: "中国",
     coordinates: [31.8206, 117.2272], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Hefei",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Hefei",
-      googleMapsQuery: "Hefei, Anhui, China",
+      title: "合肥",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非合肥实景",
+      googleMapsQuery: "中国安徽省合肥市",
       excerpt: "从一段散步开始认识合肥，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是合肥的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是合肥的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Hefei Café",
+      title: "合肥咖啡馆",
       coordinates: [31.8276, 117.2342], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Hefei, Anhui, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国安徽省合肥市咖啡馆",
       excerpt: "在合肥找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条合肥的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条合肥的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Hefei Guesthouse",
+      title: "合肥旅舍",
       coordinates: [31.8126, 117.2332], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Hefei, Anhui, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国安徽省合肥市酒店",
       excerpt: "给合肥的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条合肥的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条合肥的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Hefei City Walk",
+      title: "合肥漫步",
       coordinates: [31.8266, 117.2182], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Hefei, Anhui, China",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国安徽省合肥市景点",
       excerpt: "把合肥的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是合肥的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是合肥的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 02 · CITY: Wuhu, China · 芜湖 =====
   {
-    id: "wuhu", city: "Wuhu", country: "China",
+    id: "wuhu", city: "芜湖", country: "中国",
     coordinates: [31.3344, 118.3622], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Wuhu",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Wuhu",
-      googleMapsQuery: "Wuhu, Anhui, China",
+      title: "芜湖",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非芜湖实景",
+      googleMapsQuery: "中国安徽省芜湖市",
       excerpt: "从一段散步开始认识芜湖，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是芜湖的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是芜湖的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Wuhu Café",
+      title: "芜湖咖啡馆",
       coordinates: [31.3414, 118.3692], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Wuhu, Anhui, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国安徽省芜湖市咖啡馆",
       excerpt: "在芜湖找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条芜湖的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条芜湖的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Wuhu Guesthouse",
+      title: "芜湖旅舍",
       coordinates: [31.3264, 118.3682], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Wuhu, Anhui, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国安徽省芜湖市酒店",
       excerpt: "给芜湖的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条芜湖的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条芜湖的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Wuhu City Walk",
+      title: "芜湖漫步",
       coordinates: [31.3404, 118.3532], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Wuhu, Anhui, China",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国安徽省芜湖市景点",
       excerpt: "把芜湖的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是芜湖的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是芜湖的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 03 · CITY: Nanjing, China · 南京 =====
   {
-    id: "nanjing", city: "Nanjing", country: "China",
+    id: "nanjing", city: "南京", country: "中国",
     coordinates: [32.0603, 118.7969], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Nanjing",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Nanjing",
-      googleMapsQuery: "Nanjing, Jiangsu, China",
+      title: "南京",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非南京实景",
+      googleMapsQuery: "中国江苏省南京市",
       excerpt: "从一段散步开始认识南京，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是南京的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是南京的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Nanjing Café",
+      title: "南京咖啡馆",
       coordinates: [32.0673, 118.8039], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Nanjing, Jiangsu, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国江苏省南京市咖啡馆",
       excerpt: "在南京找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条南京的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条南京的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Nanjing Guesthouse",
+      title: "南京旅舍",
       coordinates: [32.0523, 118.8029], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Nanjing, Jiangsu, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国江苏省南京市酒店",
       excerpt: "给南京的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条南京的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条南京的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Nanjing City Walk",
+      title: "南京漫步",
       coordinates: [32.0663, 118.7879], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Nanjing, Jiangsu, China",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国江苏省南京市景点",
       excerpt: "把南京的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是南京的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是南京的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 04 · CITY: Huangshan, China · 黄山 =====
   {
-    id: "huangshan", city: "Huangshan", country: "China",
+    id: "huangshan", city: "黄山", country: "中国",
     coordinates: [29.7147, 118.3376], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Huangshan",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Huangshan",
-      googleMapsQuery: "Huangshan City, Anhui, China",
+      title: "黄山",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非黄山实景",
+      googleMapsQuery: "中国安徽省黄山市",
       excerpt: "从一段散步开始认识黄山，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是黄山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是黄山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Huangshan Café",
+      title: "黄山咖啡馆",
       coordinates: [29.7217, 118.3446], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Huangshan City, Anhui, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国安徽省黄山市咖啡馆",
       excerpt: "在黄山找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条黄山的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条黄山的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Huangshan Guesthouse",
+      title: "黄山旅舍",
       coordinates: [29.7067, 118.3436], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Huangshan City, Anhui, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国安徽省黄山市酒店",
       excerpt: "给黄山的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条黄山的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条黄山的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Huangshan City Walk",
+      title: "黄山漫步",
       coordinates: [29.7207, 118.3286], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Huangshan City, Anhui, China",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国安徽省黄山市景点",
       excerpt: "把黄山的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是黄山的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是黄山的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 05 · CITY: Fuyang, China · 阜阳 =====
   {
-    id: "fuyang", city: "Fuyang", country: "China",
+    id: "fuyang", city: "阜阳", country: "中国",
     coordinates: [32.8901, 115.8142], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Fuyang",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Fuyang",
-      googleMapsQuery: "Fuyang, Anhui, China",
+      title: "阜阳",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非阜阳实景",
+      googleMapsQuery: "中国安徽省阜阳市",
       excerpt: "从一段散步开始认识阜阳，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是阜阳的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是阜阳的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Fuyang Café",
+      title: "阜阳咖啡馆",
       coordinates: [32.8971, 115.8212], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Fuyang, Anhui, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国安徽省阜阳市咖啡馆",
       excerpt: "在阜阳找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条阜阳的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条阜阳的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Fuyang Guesthouse",
+      title: "阜阳旅舍",
       coordinates: [32.8821, 115.8202], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Fuyang, Anhui, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国安徽省阜阳市酒店",
       excerpt: "给阜阳的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条阜阳的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条阜阳的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Fuyang City Walk",
+      title: "阜阳漫步",
       coordinates: [32.8961, 115.8052], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Fuyang, Anhui, China",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国安徽省阜阳市景点",
       excerpt: "把阜阳的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是阜阳的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是阜阳的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 06 · CITY: Hangzhou, China · 杭州 =====
   {
-    id: "hangzhou", city: "Hangzhou", country: "China",
+    id: "hangzhou", city: "杭州", country: "中国",
     coordinates: [30.2741, 120.1551], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Hangzhou",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Hangzhou",
-      googleMapsQuery: "Hangzhou, Zhejiang, China",
+      title: "杭州",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非杭州实景",
+      googleMapsQuery: "中国浙江省杭州市",
       excerpt: "从一段散步开始认识杭州，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是杭州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是杭州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Hangzhou Café",
+      title: "杭州咖啡馆",
       coordinates: [30.2811, 120.1621], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Hangzhou, Zhejiang, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国浙江省杭州市咖啡馆",
       excerpt: "在杭州找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条杭州的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条杭州的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Hangzhou Guesthouse",
+      title: "杭州旅舍",
       coordinates: [30.2661, 120.1611], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Hangzhou, Zhejiang, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国浙江省杭州市酒店",
       excerpt: "给杭州的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条杭州的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条杭州的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Hangzhou City Walk",
+      title: "杭州漫步",
       coordinates: [30.2801, 120.1461], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Hangzhou, Zhejiang, China",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国浙江省杭州市景点",
       excerpt: "把杭州的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是杭州的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是杭州的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 07 · CITY: Guangzhou, China · 广州 =====
   {
-    id: "guangzhou", city: "Guangzhou", country: "China",
+    id: "guangzhou", city: "广州", country: "中国",
     coordinates: [23.1291, 113.2644], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Guangzhou",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Guangzhou",
-      googleMapsQuery: "Guangzhou, Guangdong, China",
+      title: "广州",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非广州实景",
+      googleMapsQuery: "中国广东省广州市",
       excerpt: "从一段散步开始认识广州，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是广州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是广州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Guangzhou Café",
+      title: "广州咖啡馆",
       coordinates: [23.1361, 113.2714], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Guangzhou, Guangdong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国广东省广州市咖啡馆",
       excerpt: "在广州找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条广州的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条广州的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Guangzhou Guesthouse",
+      title: "广州旅舍",
       coordinates: [23.1211, 113.2704], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Guangzhou, Guangdong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国广东省广州市酒店",
       excerpt: "给广州的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条广州的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条广州的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Guangzhou City Walk",
+      title: "广州漫步",
       coordinates: [23.1351, 113.2554], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Guangzhou, Guangdong, China",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国广东省广州市景点",
       excerpt: "把广州的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是广州的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是广州的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 08 · CITY: Shenzhen, China · 深圳 =====
   {
-    id: "shenzhen", city: "Shenzhen", country: "China",
+    id: "shenzhen", city: "深圳", country: "中国",
     coordinates: [22.5431, 114.0579], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Shenzhen",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Shenzhen",
-      googleMapsQuery: "Shenzhen, Guangdong, China",
+      title: "深圳",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非深圳实景",
+      googleMapsQuery: "中国广东省深圳市",
       excerpt: "从一段散步开始认识深圳，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是深圳的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是深圳的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Shenzhen Café",
+      title: "深圳咖啡馆",
       coordinates: [22.5501, 114.0649], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Shenzhen, Guangdong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国广东省深圳市咖啡馆",
       excerpt: "在深圳找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条深圳的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条深圳的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Shenzhen Guesthouse",
+      title: "深圳旅舍",
       coordinates: [22.5351, 114.0639], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Shenzhen, Guangdong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国广东省深圳市酒店",
       excerpt: "给深圳的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条深圳的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条深圳的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Shenzhen City Walk",
+      title: "深圳漫步",
       coordinates: [22.5491, 114.0489], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Shenzhen, Guangdong, China",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国广东省深圳市景点",
       excerpt: "把深圳的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是深圳的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是深圳的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 09 · CITY: Huizhou, China · 惠州 =====
   {
-    id: "huizhou", city: "Huizhou", country: "China",
+    id: "huizhou", city: "惠州", country: "中国",
     coordinates: [23.1115, 114.4152], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Huizhou",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Huizhou",
-      googleMapsQuery: "Huizhou, Guangdong, China",
+      title: "惠州",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非惠州实景",
+      googleMapsQuery: "中国广东省惠州市",
       excerpt: "从一段散步开始认识惠州，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是惠州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是惠州的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Huizhou Café",
+      title: "惠州咖啡馆",
       coordinates: [23.1185, 114.4222], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Huizhou, Guangdong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国广东省惠州市咖啡馆",
       excerpt: "在惠州找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条惠州的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条惠州的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Huizhou Guesthouse",
+      title: "惠州旅舍",
       coordinates: [23.1035, 114.4212], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Huizhou, Guangdong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国广东省惠州市酒店",
       excerpt: "给惠州的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条惠州的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条惠州的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Huizhou City Walk",
+      title: "惠州漫步",
       coordinates: [23.1175, 114.4062], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Huizhou, Guangdong, China",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国广东省惠州市景点",
       excerpt: "把惠州的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是惠州的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是惠州的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 10 · CITY: Dongguan, China · 东莞 =====
   {
-    id: "dongguan", city: "Dongguan", country: "China",
+    id: "dongguan", city: "东莞", country: "中国",
     coordinates: [23.0207, 113.7518], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Dongguan",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Dongguan",
-      googleMapsQuery: "Dongguan, Guangdong, China",
+      title: "东莞",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非东莞实景",
+      googleMapsQuery: "中国广东省东莞市",
       excerpt: "从一段散步开始认识东莞，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是东莞的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是东莞的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Dongguan Café",
+      title: "东莞咖啡馆",
       coordinates: [23.0277, 113.7588], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Dongguan, Guangdong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国广东省东莞市咖啡馆",
       excerpt: "在东莞找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条东莞的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条东莞的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Dongguan Guesthouse",
+      title: "东莞旅舍",
       coordinates: [23.0127, 113.7578], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Dongguan, Guangdong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国广东省东莞市酒店",
       excerpt: "给东莞的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条东莞的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条东莞的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Dongguan City Walk",
+      title: "东莞漫步",
       coordinates: [23.0267, 113.7428], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Dongguan, Guangdong, China",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国广东省东莞市景点",
       excerpt: "把东莞的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是东莞的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是东莞的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 11 · CITY: Taian, China · 泰安 =====
   {
-    id: "taian", city: "Taian", country: "China",
+    id: "taian", city: "泰安", country: "中国",
     coordinates: [36.2003, 117.0876], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Taian",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Taian",
-      googleMapsQuery: "Taian, Shandong, China",
+      title: "泰安",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非泰安实景",
+      googleMapsQuery: "中国山东省泰安市",
       excerpt: "从一段散步开始认识泰安，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是泰安的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是泰安的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Taian Café",
+      title: "泰安咖啡馆",
       coordinates: [36.2073, 117.0946], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Taian, Shandong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国山东省泰安市咖啡馆",
       excerpt: "在泰安找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条泰安的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条泰安的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Taian Guesthouse",
+      title: "泰安旅舍",
       coordinates: [36.1923, 117.0936], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Taian, Shandong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国山东省泰安市酒店",
       excerpt: "给泰安的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条泰安的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条泰安的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Taian City Walk",
+      title: "泰安漫步",
       coordinates: [36.2063, 117.0786], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Taian, Shandong, China",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国山东省泰安市景点",
       excerpt: "把泰安的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是泰安的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是泰安的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 12 · CITY: Foshan, China · 佛山 =====
   {
-    id: "foshan", city: "Foshan", country: "China",
+    id: "foshan", city: "佛山", country: "中国",
     coordinates: [23.0215, 113.1214], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Foshan",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Foshan",
-      googleMapsQuery: "Foshan, Guangdong, China",
+      title: "佛山",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非佛山实景",
+      googleMapsQuery: "中国广东省佛山市",
       excerpt: "从一段散步开始认识佛山，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是佛山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是佛山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Foshan Café",
+      title: "佛山咖啡馆",
       coordinates: [23.0285, 113.1284], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Foshan, Guangdong, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国广东省佛山市咖啡馆",
       excerpt: "在佛山找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条佛山的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条佛山的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Foshan Guesthouse",
+      title: "佛山旅舍",
       coordinates: [23.0135, 113.1274], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Foshan, Guangdong, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国广东省佛山市酒店",
       excerpt: "给佛山的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条佛山的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条佛山的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Foshan City Walk",
+      title: "佛山漫步",
       coordinates: [23.0275, 113.1124], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Foshan, Guangdong, China",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国广东省佛山市景点",
       excerpt: "把佛山的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是佛山的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是佛山的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 13 · CITY: Kunming, China · 昆明 =====
   {
-    id: "kunming", city: "Kunming", country: "China",
+    id: "kunming", city: "昆明", country: "中国",
     coordinates: [25.0389, 102.7183], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Kunming",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Kunming",
-      googleMapsQuery: "Kunming, Yunnan, China",
+      title: "昆明",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非昆明实景",
+      googleMapsQuery: "中国云南省昆明市",
       excerpt: "从一段散步开始认识昆明，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是昆明的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是昆明的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Kunming Café",
+      title: "昆明咖啡馆",
       coordinates: [25.0459, 102.7253], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Kunming, Yunnan, China",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "中国云南省昆明市咖啡馆",
       excerpt: "在昆明找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条昆明的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条昆明的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Kunming Guesthouse",
+      title: "昆明旅舍",
       coordinates: [25.0309, 102.7243], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Kunming, Yunnan, China",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "中国云南省昆明市酒店",
       excerpt: "给昆明的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条昆明的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条昆明的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Kunming City Walk",
+      title: "昆明漫步",
       coordinates: [25.0449, 102.7093], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Kunming, Yunnan, China",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "中国云南省昆明市景点",
       excerpt: "把昆明的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是昆明的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是昆明的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 14 · CITY: Hong Kong, Hong Kong SAR · 香港 =====
   {
-    id: "hong-kong", city: "Hong Kong", country: "Hong Kong SAR",
+    id: "hong-kong", city: "香港", country: "香港特别行政区",
     coordinates: [22.3193, 114.1694], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Hong Kong",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Hong Kong",
-      googleMapsQuery: "Hong Kong",
+      title: "香港",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非香港实景",
+      googleMapsQuery: "香港",
       excerpt: "从一段散步开始认识香港，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是香港的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是香港的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Hong Kong Café",
+      title: "香港咖啡馆",
       coordinates: [22.3263, 114.1764], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Hong Kong",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "香港咖啡馆",
       excerpt: "在香港找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条香港的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条香港的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Hong Kong Guesthouse",
+      title: "香港旅舍",
       coordinates: [22.3113, 114.1754], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Hong Kong",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "香港酒店",
       excerpt: "给香港的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条香港的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条香港的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Hong Kong City Walk",
+      title: "香港漫步",
       coordinates: [22.3253, 114.1604], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Hong Kong",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "香港景点",
       excerpt: "把香港的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是香港的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是香港的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 15 · CITY: Macau, Macau SAR · 澳门 =====
   {
-    id: "macau", city: "Macau", country: "Macau SAR",
+    id: "macau", city: "澳门", country: "澳门特别行政区",
     coordinates: [22.1987, 113.5439], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Macau",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Macau",
-      googleMapsQuery: "Macau",
+      title: "澳门",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非澳门实景",
+      googleMapsQuery: "澳门",
       excerpt: "从一段散步开始认识澳门，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是澳门的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是澳门的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Macau Café",
+      title: "澳门咖啡馆",
       coordinates: [22.2057, 113.5509], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Macau",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "澳门咖啡馆",
       excerpt: "在澳门找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条澳门的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条澳门的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Macau Guesthouse",
+      title: "澳门旅舍",
       coordinates: [22.1907, 113.5499], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Macau",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "澳门酒店",
       excerpt: "给澳门的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条澳门的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条澳门的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Macau City Walk",
+      title: "澳门漫步",
       coordinates: [22.2047, 113.5349], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Macau",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "澳门景点",
       excerpt: "把澳门的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是澳门的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是澳门的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 16 · CITY: Da Nang, Vietnam · 岘港 =====
   {
-    id: "da-nang", city: "Da Nang", country: "Vietnam",
+    id: "da-nang", city: "岘港", country: "越南",
     coordinates: [16.0544, 108.2022], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Da Nang",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Da Nang",
-      googleMapsQuery: "Da Nang, Vietnam",
+      title: "岘港",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非岘港实景",
+      googleMapsQuery: "越南岘港",
       excerpt: "从一段散步开始认识岘港，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是岘港的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是岘港的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Da Nang Café",
+      title: "岘港咖啡馆",
       coordinates: [16.0614, 108.2092], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Da Nang, Vietnam",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "越南岘港咖啡馆",
       excerpt: "在岘港找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条岘港的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条岘港的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Da Nang Guesthouse",
+      title: "岘港旅舍",
       coordinates: [16.0464, 108.2082], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Da Nang, Vietnam",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "越南岘港酒店",
       excerpt: "给岘港的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条岘港的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条岘港的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Da Nang City Walk",
+      title: "岘港漫步",
       coordinates: [16.0604, 108.1932], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Da Nang, Vietnam",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "越南岘港景点",
       excerpt: "把岘港的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是岘港的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是岘港的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 17 · CITY: Hoi An, Vietnam · 会安 =====
   {
-    id: "hoi-an", city: "Hoi An", country: "Vietnam",
+    id: "hoi-an", city: "会安", country: "越南",
     coordinates: [15.8801, 108.338], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Hoi An",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Hoi An",
-      googleMapsQuery: "Hoi An, Vietnam",
+      title: "会安",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非会安实景",
+      googleMapsQuery: "越南会安",
       excerpt: "从一段散步开始认识会安，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是会安的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是会安的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Hoi An Café",
+      title: "会安咖啡馆",
       coordinates: [15.8871, 108.345], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Hoi An, Vietnam",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "越南会安咖啡馆",
       excerpt: "在会安找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条会安的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条会安的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Hoi An Guesthouse",
+      title: "会安旅舍",
       coordinates: [15.8721, 108.344], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Hoi An, Vietnam",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "越南会安酒店",
       excerpt: "给会安的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条会安的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条会安的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Hoi An City Walk",
+      title: "会安漫步",
       coordinates: [15.8861, 108.329], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Hoi An, Vietnam",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "越南会安景点",
       excerpt: "把会安的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是会安的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是会安的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 18 · CITY: Nha Trang, Vietnam · 芽庄 =====
   {
-    id: "nha-trang", city: "Nha Trang", country: "Vietnam",
+    id: "nha-trang", city: "芽庄", country: "越南",
     coordinates: [12.2388, 109.1967], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Nha Trang",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Nha Trang",
-      googleMapsQuery: "Nha Trang, Vietnam",
+      title: "芽庄",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非芽庄实景",
+      googleMapsQuery: "越南芽庄",
       excerpt: "从一段散步开始认识芽庄，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是芽庄的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是芽庄的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Nha Trang Café",
+      title: "芽庄咖啡馆",
       coordinates: [12.2458, 109.2037], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Nha Trang, Vietnam",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "越南芽庄咖啡馆",
       excerpt: "在芽庄找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条芽庄的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条芽庄的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Nha Trang Guesthouse",
+      title: "芽庄旅舍",
       coordinates: [12.2308, 109.2027], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Nha Trang, Vietnam",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "越南芽庄酒店",
       excerpt: "给芽庄的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条芽庄的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条芽庄的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Nha Trang City Walk",
+      title: "芽庄漫步",
       coordinates: [12.2448, 109.1877], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Nha Trang, Vietnam",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "越南芽庄景点",
       excerpt: "把芽庄的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是芽庄的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是芽庄的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 19 · CITY: Ho Chi Minh City, Vietnam · 胡志明市 =====
   {
-    id: "ho-chi-minh-city", city: "Ho Chi Minh City", country: "Vietnam",
+    id: "ho-chi-minh-city", city: "胡志明市", country: "越南",
     coordinates: [10.8231, 106.6297], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Ho Chi Minh City",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Ho Chi Minh City",
-      googleMapsQuery: "Ho Chi Minh City, Vietnam",
+      title: "胡志明市",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非胡志明市实景",
+      googleMapsQuery: "越南胡志明市",
       excerpt: "从一段散步开始认识胡志明市，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是胡志明市的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是胡志明市的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Ho Chi Minh City Café",
+      title: "胡志明市咖啡馆",
       coordinates: [10.8301, 106.6367], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Ho Chi Minh City, Vietnam",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "越南胡志明市咖啡馆",
       excerpt: "在胡志明市找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条胡志明市的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条胡志明市的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Ho Chi Minh City Guesthouse",
+      title: "胡志明市旅舍",
       coordinates: [10.8151, 106.6357], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Ho Chi Minh City, Vietnam",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "越南胡志明市酒店",
       excerpt: "给胡志明市的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条胡志明市的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条胡志明市的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Ho Chi Minh City City Walk",
+      title: "胡志明市漫步",
       coordinates: [10.8291, 106.6207], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Ho Chi Minh City, Vietnam",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "越南胡志明市景点",
       excerpt: "把胡志明市的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是胡志明市的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是胡志明市的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 20 · CITY: Phnom Penh, Cambodia · 金边 =====
   {
-    id: "phnom-penh", city: "Phnom Penh", country: "Cambodia",
+    id: "phnom-penh", city: "金边", country: "柬埔寨",
     coordinates: [11.5564, 104.9282], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Phnom Penh",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Phnom Penh",
-      googleMapsQuery: "Phnom Penh, Cambodia",
+      title: "金边",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非金边实景",
+      googleMapsQuery: "柬埔寨金边",
       excerpt: "从一段散步开始认识金边，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是金边的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是金边的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Phnom Penh Café",
+      title: "金边咖啡馆",
       coordinates: [11.5634, 104.9352], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Phnom Penh, Cambodia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "柬埔寨金边咖啡馆",
       excerpt: "在金边找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条金边的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条金边的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Phnom Penh Guesthouse",
+      title: "金边旅舍",
       coordinates: [11.5484, 104.9342], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Phnom Penh, Cambodia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "柬埔寨金边酒店",
       excerpt: "给金边的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条金边的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条金边的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Phnom Penh City Walk",
+      title: "金边漫步",
       coordinates: [11.5624, 104.9192], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Phnom Penh, Cambodia",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "柬埔寨金边景点",
       excerpt: "把金边的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是金边的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是金边的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 21 · CITY: Battambang, Cambodia · 马德望 =====
   {
-    id: "battambang", city: "Battambang", country: "Cambodia",
+    id: "battambang", city: "马德望", country: "柬埔寨",
     coordinates: [13.0957, 103.2022], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Battambang",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Battambang",
-      googleMapsQuery: "Battambang, Cambodia",
+      title: "马德望",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非马德望实景",
+      googleMapsQuery: "柬埔寨马德望",
       excerpt: "从一段散步开始认识马德望，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是马德望的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是马德望的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Battambang Café",
+      title: "马德望咖啡馆",
       coordinates: [13.1027, 103.2092], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Battambang, Cambodia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "柬埔寨马德望咖啡馆",
       excerpt: "在马德望找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条马德望的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条马德望的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Battambang Guesthouse",
+      title: "马德望旅舍",
       coordinates: [13.0877, 103.2082], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Battambang, Cambodia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "柬埔寨马德望酒店",
       excerpt: "给马德望的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条马德望的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条马德望的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Battambang City Walk",
+      title: "马德望漫步",
       coordinates: [13.1017, 103.1932], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Battambang, Cambodia",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "柬埔寨马德望景点",
       excerpt: "把马德望的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是马德望的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是马德望的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 22 · CITY: Siem Reap, Cambodia · 暹粒 =====
   {
-    id: "siem-reap", city: "Siem Reap", country: "Cambodia",
+    id: "siem-reap", city: "暹粒", country: "柬埔寨",
     coordinates: [13.3633, 103.8564], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Siem Reap",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Siem Reap",
-      googleMapsQuery: "Siem Reap, Cambodia",
+      title: "暹粒",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非暹粒实景",
+      googleMapsQuery: "柬埔寨暹粒",
       excerpt: "从一段散步开始认识暹粒，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是暹粒的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是暹粒的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Siem Reap Café",
+      title: "暹粒咖啡馆",
       coordinates: [13.3703, 103.8634], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Siem Reap, Cambodia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "柬埔寨暹粒咖啡馆",
       excerpt: "在暹粒找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条暹粒的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条暹粒的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Siem Reap Guesthouse",
+      title: "暹粒旅舍",
       coordinates: [13.3553, 103.8624], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Siem Reap, Cambodia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "柬埔寨暹粒酒店",
       excerpt: "给暹粒的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条暹粒的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条暹粒的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Siem Reap City Walk",
+      title: "暹粒漫步",
       coordinates: [13.3693, 103.8474], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Siem Reap, Cambodia",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "柬埔寨暹粒景点",
       excerpt: "把暹粒的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是暹粒的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是暹粒的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 23 · CITY: Kampot, Cambodia · 贡布 =====
   {
-    id: "kampot", city: "Kampot", country: "Cambodia",
+    id: "kampot", city: "贡布", country: "柬埔寨",
     coordinates: [10.6104, 104.1815], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Kampot",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Kampot",
-      googleMapsQuery: "Kampot, Cambodia",
+      title: "贡布",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非贡布实景",
+      googleMapsQuery: "柬埔寨贡布",
       excerpt: "从一段散步开始认识贡布，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是贡布的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是贡布的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Kampot Café",
+      title: "贡布咖啡馆",
       coordinates: [10.6174, 104.1885], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Kampot, Cambodia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "柬埔寨贡布咖啡馆",
       excerpt: "在贡布找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条贡布的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条贡布的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Kampot Guesthouse",
+      title: "贡布旅舍",
       coordinates: [10.6024, 104.1875], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Kampot, Cambodia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "柬埔寨贡布酒店",
       excerpt: "给贡布的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条贡布的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条贡布的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Kampot City Walk",
+      title: "贡布漫步",
       coordinates: [10.6164, 104.1725], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Kampot, Cambodia",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "柬埔寨贡布景点",
       excerpt: "把贡布的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是贡布的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是贡布的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
-  // ===== 24 · CITY: Sihanoukville, Cambodia · 西哈努克市 =====
+  // ===== 24 · CITY: Sihanoukville, Cambodia · 西哈努克港 =====
   {
-    id: "sihanoukville", city: "Sihanoukville", country: "Cambodia",
+    id: "sihanoukville", city: "西哈努克港", country: "柬埔寨",
     coordinates: [10.6275, 103.5221], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Sihanoukville",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Sihanoukville",
-      googleMapsQuery: "Sihanoukville, Cambodia",
-      excerpt: "从一段散步开始认识西哈努克市，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是西哈努克市的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      title: "西哈努克港",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非西哈努克港实景",
+      googleMapsQuery: "柬埔寨西哈努克港",
+      excerpt: "从一段散步开始认识西哈努克港，在这里整理自己的城市印象与旅行片段。",
+      content: [{ heading: '城市笔记', paragraphs: ["这是西哈努克港的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Sihanoukville Café",
+      title: "西哈努克港咖啡馆",
       coordinates: [10.6345, 103.5291], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Sihanoukville, Cambodia",
-      excerpt: "在西哈努克市找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条西哈努克市的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "柬埔寨西哈努克港咖啡馆",
+      excerpt: "在西哈努克港找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条西哈努克港的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Sihanoukville Guesthouse",
+      title: "西哈努克港旅舍",
       coordinates: [10.6195, 103.5281], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Sihanoukville, Cambodia",
-      excerpt: "给西哈努克市的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条西哈努克市的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "柬埔寨西哈努克港酒店",
+      excerpt: "给西哈努克港的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条西哈努克港的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Sihanoukville City Walk",
+      title: "西哈努克港漫步",
       coordinates: [10.6335, 103.5131], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Sihanoukville, Cambodia",
-      excerpt: "把西哈努克市的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是西哈努克市的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "柬埔寨西哈努克港景点",
+      excerpt: "把西哈努克港的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
+      content: [{ heading: '胜地笔记', paragraphs: ["这是西哈努克港的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 25 · CITY: Bangkok, Thailand · 曼谷 =====
   {
-    id: "bangkok", city: "Bangkok", country: "Thailand",
+    id: "bangkok", city: "曼谷", country: "泰国",
     coordinates: [13.7563, 100.5018], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Bangkok",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Bangkok",
-      googleMapsQuery: "Bangkok, Thailand",
+      title: "曼谷",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非曼谷实景",
+      googleMapsQuery: "泰国曼谷",
       excerpt: "从一段散步开始认识曼谷，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是曼谷的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是曼谷的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Bangkok Café",
+      title: "曼谷咖啡馆",
       coordinates: [13.7633, 100.5088], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Bangkok, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国曼谷咖啡馆",
       excerpt: "在曼谷找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条曼谷的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条曼谷的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Bangkok Guesthouse",
+      title: "曼谷旅舍",
       coordinates: [13.7483, 100.5078], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Bangkok, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国曼谷酒店",
       excerpt: "给曼谷的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条曼谷的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条曼谷的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Bangkok City Walk",
+      title: "曼谷漫步",
       coordinates: [13.7623, 100.4928], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Bangkok, Thailand",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国曼谷景点",
       excerpt: "把曼谷的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是曼谷的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是曼谷的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 26 · CITY: Ratchaburi, Thailand · 叻丕 =====
   {
-    id: "ratchaburi", city: "Ratchaburi", country: "Thailand",
+    id: "ratchaburi", city: "叻丕", country: "泰国",
     coordinates: [13.5283, 99.8134], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Ratchaburi",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Ratchaburi",
-      googleMapsQuery: "Ratchaburi, Thailand",
+      title: "叻丕",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非叻丕实景",
+      googleMapsQuery: "泰国叻丕",
       excerpt: "从一段散步开始认识叻丕，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是叻丕的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是叻丕的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Ratchaburi Café",
+      title: "叻丕咖啡馆",
       coordinates: [13.5353, 99.8204], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Ratchaburi, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国叻丕咖啡馆",
       excerpt: "在叻丕找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条叻丕的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条叻丕的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Ratchaburi Guesthouse",
+      title: "叻丕旅舍",
       coordinates: [13.5203, 99.8194], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Ratchaburi, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国叻丕酒店",
       excerpt: "给叻丕的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条叻丕的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条叻丕的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Ratchaburi City Walk",
+      title: "叻丕漫步",
       coordinates: [13.5343, 99.8044], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Ratchaburi, Thailand",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国叻丕景点",
       excerpt: "把叻丕的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是叻丕的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是叻丕的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 27 · CITY: Ayutthaya, Thailand · 大城 =====
   {
-    id: "ayutthaya", city: "Ayutthaya", country: "Thailand",
+    id: "ayutthaya", city: "大城", country: "泰国",
     coordinates: [14.3532, 100.5689], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Ayutthaya",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Ayutthaya",
-      googleMapsQuery: "Ayutthaya, Thailand",
+      title: "大城",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非大城实景",
+      googleMapsQuery: "泰国大城",
       excerpt: "从一段散步开始认识大城，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是大城的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是大城的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Ayutthaya Café",
+      title: "大城咖啡馆",
       coordinates: [14.3602, 100.5759], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Ayutthaya, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国大城咖啡馆",
       excerpt: "在大城找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条大城的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条大城的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Ayutthaya Guesthouse",
+      title: "大城旅舍",
       coordinates: [14.3452, 100.5749], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Ayutthaya, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国大城酒店",
       excerpt: "给大城的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条大城的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条大城的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Ayutthaya City Walk",
+      title: "大城漫步",
       coordinates: [14.3592, 100.5599], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Ayutthaya, Thailand",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国大城景点",
       excerpt: "把大城的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是大城的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是大城的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 28 · CITY: Phitsanulok, Thailand · 彭世洛 =====
   {
-    id: "phitsanulok", city: "Phitsanulok", country: "Thailand",
+    id: "phitsanulok", city: "彭世洛", country: "泰国",
     coordinates: [16.8211, 100.2659], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Phitsanulok",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Phitsanulok",
-      googleMapsQuery: "Phitsanulok, Thailand",
+      title: "彭世洛",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非彭世洛实景",
+      googleMapsQuery: "泰国彭世洛",
       excerpt: "从一段散步开始认识彭世洛，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是彭世洛的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是彭世洛的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Phitsanulok Café",
+      title: "彭世洛咖啡馆",
       coordinates: [16.8281, 100.2729], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Phitsanulok, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国彭世洛咖啡馆",
       excerpt: "在彭世洛找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条彭世洛的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条彭世洛的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Phitsanulok Guesthouse",
+      title: "彭世洛旅舍",
       coordinates: [16.8131, 100.2719], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Phitsanulok, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国彭世洛酒店",
       excerpt: "给彭世洛的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条彭世洛的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条彭世洛的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Phitsanulok City Walk",
+      title: "彭世洛漫步",
       coordinates: [16.8271, 100.2569], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Phitsanulok, Thailand",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国彭世洛景点",
       excerpt: "把彭世洛的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是彭世洛的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是彭世洛的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 29 · CITY: Sukhothai, Thailand · 素可泰 =====
   {
-    id: "sukhothai", city: "Sukhothai", country: "Thailand",
+    id: "sukhothai", city: "素可泰", country: "泰国",
     coordinates: [17.0078, 99.8265], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Sukhothai",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Sukhothai",
-      googleMapsQuery: "Sukhothai, Thailand",
+      title: "素可泰",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非素可泰实景",
+      googleMapsQuery: "泰国素可泰",
       excerpt: "从一段散步开始认识素可泰，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是素可泰的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是素可泰的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Sukhothai Café",
+      title: "素可泰咖啡馆",
       coordinates: [17.0148, 99.8335], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Sukhothai, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国素可泰咖啡馆",
       excerpt: "在素可泰找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条素可泰的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条素可泰的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Sukhothai Guesthouse",
+      title: "素可泰旅舍",
       coordinates: [16.9998, 99.8325], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Sukhothai, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国素可泰酒店",
       excerpt: "给素可泰的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条素可泰的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条素可泰的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Sukhothai City Walk",
+      title: "素可泰漫步",
       coordinates: [17.0138, 99.8175], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Sukhothai, Thailand",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国素可泰景点",
       excerpt: "把素可泰的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是素可泰的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是素可泰的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 30 · CITY: Khon Kaen, Thailand · 孔敬 =====
   {
-    id: "khon-kaen", city: "Khon Kaen", country: "Thailand",
+    id: "khon-kaen", city: "孔敬", country: "泰国",
     coordinates: [16.4322, 102.8236], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Khon Kaen",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Khon Kaen",
-      googleMapsQuery: "Khon Kaen, Thailand",
+      title: "孔敬",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非孔敬实景",
+      googleMapsQuery: "泰国孔敬",
       excerpt: "从一段散步开始认识孔敬，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是孔敬的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是孔敬的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Khon Kaen Café",
+      title: "孔敬咖啡馆",
       coordinates: [16.4392, 102.8306], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Khon Kaen, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国孔敬咖啡馆",
       excerpt: "在孔敬找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条孔敬的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条孔敬的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Khon Kaen Guesthouse",
+      title: "孔敬旅舍",
       coordinates: [16.4242, 102.8296], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Khon Kaen, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国孔敬酒店",
       excerpt: "给孔敬的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条孔敬的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条孔敬的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Khon Kaen City Walk",
+      title: "孔敬漫步",
       coordinates: [16.4382, 102.8146], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Khon Kaen, Thailand",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国孔敬景点",
       excerpt: "把孔敬的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是孔敬的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是孔敬的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 31 · CITY: Udon Thani, Thailand · 乌隆他尼 =====
   {
-    id: "udon-thani", city: "Udon Thani", country: "Thailand",
+    id: "udon-thani", city: "乌隆他尼", country: "泰国",
     coordinates: [17.4138, 102.7872], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Udon Thani",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Udon Thani",
-      googleMapsQuery: "Udon Thani, Thailand",
+      title: "乌隆他尼",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非乌隆他尼实景",
+      googleMapsQuery: "泰国乌隆他尼",
       excerpt: "从一段散步开始认识乌隆他尼，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是乌隆他尼的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是乌隆他尼的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Udon Thani Café",
+      title: "乌隆他尼咖啡馆",
       coordinates: [17.4208, 102.7942], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Udon Thani, Thailand",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "泰国乌隆他尼咖啡馆",
       excerpt: "在乌隆他尼找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条乌隆他尼的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条乌隆他尼的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Udon Thani Guesthouse",
+      title: "乌隆他尼旅舍",
       coordinates: [17.4058, 102.7932], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Udon Thani, Thailand",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "泰国乌隆他尼酒店",
       excerpt: "给乌隆他尼的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条乌隆他尼的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条乌隆他尼的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Udon Thani City Walk",
+      title: "乌隆他尼漫步",
       coordinates: [17.4198, 102.7782], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Udon Thani, Thailand",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "泰国乌隆他尼景点",
       excerpt: "把乌隆他尼的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是乌隆他尼的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是乌隆他尼的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 32 · CITY: Vientiane, Laos · 万象 =====
   {
-    id: "vientiane", city: "Vientiane", country: "Laos",
+    id: "vientiane", city: "万象", country: "老挝",
     coordinates: [17.9757, 102.6331], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Vientiane",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Vientiane",
-      googleMapsQuery: "Vientiane, Laos",
+      title: "万象",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非万象实景",
+      googleMapsQuery: "老挝万象",
       excerpt: "从一段散步开始认识万象，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是万象的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是万象的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Vientiane Café",
+      title: "万象咖啡馆",
       coordinates: [17.9827, 102.6401], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Vientiane, Laos",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "老挝万象咖啡馆",
       excerpt: "在万象找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条万象的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条万象的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Vientiane Guesthouse",
+      title: "万象旅舍",
       coordinates: [17.9677, 102.6391], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Vientiane, Laos",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "老挝万象酒店",
       excerpt: "给万象的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条万象的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条万象的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Vientiane City Walk",
+      title: "万象漫步",
       coordinates: [17.9817, 102.6241], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Vientiane, Laos",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "老挝万象景点",
       excerpt: "把万象的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是万象的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是万象的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 33 · CITY: Vang Vieng, Laos · 万荣 =====
   {
-    id: "vang-vieng", city: "Vang Vieng", country: "Laos",
+    id: "vang-vieng", city: "万荣", country: "老挝",
     coordinates: [18.9242, 102.4478], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Vang Vieng",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Vang Vieng",
-      googleMapsQuery: "Vang Vieng, Laos",
+      title: "万荣",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非万荣实景",
+      googleMapsQuery: "老挝万荣",
       excerpt: "从一段散步开始认识万荣，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是万荣的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是万荣的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Vang Vieng Café",
+      title: "万荣咖啡馆",
       coordinates: [18.9312, 102.4548], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Vang Vieng, Laos",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "老挝万荣咖啡馆",
       excerpt: "在万荣找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条万荣的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条万荣的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Vang Vieng Guesthouse",
+      title: "万荣旅舍",
       coordinates: [18.9162, 102.4538], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Vang Vieng, Laos",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "老挝万荣酒店",
       excerpt: "给万荣的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条万荣的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条万荣的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Vang Vieng City Walk",
+      title: "万荣漫步",
       coordinates: [18.9302, 102.4388], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Vang Vieng, Laos",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "老挝万荣景点",
       excerpt: "把万荣的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是万荣的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是万荣的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 34 · CITY: Luang Prabang, Laos · 琅勃拉邦 =====
   {
-    id: "luang-prabang", city: "Luang Prabang", country: "Laos",
+    id: "luang-prabang", city: "琅勃拉邦", country: "老挝",
     coordinates: [19.8833, 102.1333], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Luang Prabang",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Luang Prabang",
-      googleMapsQuery: "Luang Prabang, Laos",
+      title: "琅勃拉邦",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非琅勃拉邦实景",
+      googleMapsQuery: "老挝琅勃拉邦",
       excerpt: "从一段散步开始认识琅勃拉邦，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是琅勃拉邦的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是琅勃拉邦的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Luang Prabang Café",
+      title: "琅勃拉邦咖啡馆",
       coordinates: [19.8903, 102.1403], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Luang Prabang, Laos",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "老挝琅勃拉邦咖啡馆",
       excerpt: "在琅勃拉邦找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条琅勃拉邦的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条琅勃拉邦的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Luang Prabang Guesthouse",
+      title: "琅勃拉邦旅舍",
       coordinates: [19.8753, 102.1393], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Luang Prabang, Laos",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "老挝琅勃拉邦酒店",
       excerpt: "给琅勃拉邦的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条琅勃拉邦的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条琅勃拉邦的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Luang Prabang City Walk",
+      title: "琅勃拉邦漫步",
       coordinates: [19.8893, 102.1243], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Luang Prabang, Laos",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "老挝琅勃拉邦景点",
       excerpt: "把琅勃拉邦的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是琅勃拉邦的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是琅勃拉邦的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 35 · CITY: Singapore, Singapore · 新加坡 =====
   {
-    id: "singapore", city: "Singapore", country: "Singapore",
+    id: "singapore", city: "新加坡", country: "新加坡",
     coordinates: [1.3521, 103.8198], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Singapore",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Singapore",
-      googleMapsQuery: "Singapore",
+      title: "新加坡",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非新加坡实景",
+      googleMapsQuery: "新加坡",
       excerpt: "从一段散步开始认识新加坡，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是新加坡的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是新加坡的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Singapore Café",
+      title: "新加坡咖啡馆",
       coordinates: [1.3591, 103.8268], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Singapore",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "新加坡咖啡馆",
       excerpt: "在新加坡找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条新加坡的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条新加坡的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Singapore Guesthouse",
+      title: "新加坡旅舍",
       coordinates: [1.3441, 103.8258], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Singapore",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "新加坡酒店",
       excerpt: "给新加坡的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条新加坡的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条新加坡的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Singapore City Walk",
+      title: "新加坡漫步",
       coordinates: [1.3581, 103.8108], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Singapore",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "新加坡景点",
       excerpt: "把新加坡的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是新加坡的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是新加坡的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 36 · CITY: Johor Bahru, Malaysia · 新山 =====
   {
-    id: "johor-bahru", city: "Johor Bahru", country: "Malaysia",
+    id: "johor-bahru", city: "新山", country: "马来西亚",
     coordinates: [1.4927, 103.7414], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Johor Bahru",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Johor Bahru",
-      googleMapsQuery: "Johor Bahru, Malaysia",
+      title: "新山",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非新山实景",
+      googleMapsQuery: "马来西亚新山",
       excerpt: "从一段散步开始认识新山，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是新山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是新山的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Johor Bahru Café",
+      title: "新山咖啡馆",
       coordinates: [1.4997, 103.7484], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Johor Bahru, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚新山咖啡馆",
       excerpt: "在新山找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条新山的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条新山的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Johor Bahru Guesthouse",
+      title: "新山旅舍",
       coordinates: [1.4847, 103.7474], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Johor Bahru, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚新山酒店",
       excerpt: "给新山的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条新山的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条新山的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Johor Bahru City Walk",
+      title: "新山漫步",
       coordinates: [1.4987, 103.7324], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Johor Bahru, Malaysia",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚新山景点",
       excerpt: "把新山的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是新山的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是新山的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 37 · CITY: Malacca, Malaysia · 马六甲 =====
   {
-    id: "malacca", city: "Malacca", country: "Malaysia",
+    id: "malacca", city: "马六甲", country: "马来西亚",
     coordinates: [2.1896, 102.2501], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Malacca",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Malacca",
-      googleMapsQuery: "Malacca, Malaysia",
+      title: "马六甲",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非马六甲实景",
+      googleMapsQuery: "马来西亚马六甲",
       excerpt: "从一段散步开始认识马六甲，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是马六甲的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是马六甲的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Malacca Café",
+      title: "马六甲咖啡馆",
       coordinates: [2.1966, 102.2571], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Malacca, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚马六甲咖啡馆",
       excerpt: "在马六甲找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条马六甲的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条马六甲的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Malacca Guesthouse",
+      title: "马六甲旅舍",
       coordinates: [2.1816, 102.2561], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Malacca, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚马六甲酒店",
       excerpt: "给马六甲的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条马六甲的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条马六甲的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Malacca City Walk",
+      title: "马六甲漫步",
       coordinates: [2.1956, 102.2411], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Malacca, Malaysia",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚马六甲景点",
       excerpt: "把马六甲的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是马六甲的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是马六甲的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 38 · CITY: Kuala Lumpur, Malaysia · 吉隆坡 =====
   {
-    id: "kuala-lumpur", city: "Kuala Lumpur", country: "Malaysia",
+    id: "kuala-lumpur", city: "吉隆坡", country: "马来西亚",
     coordinates: [3.139, 101.6869], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Kuala Lumpur",
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative city photograph of Kyoto; not a photograph of Kuala Lumpur",
-      googleMapsQuery: "Kuala Lumpur, Malaysia",
+      title: "吉隆坡",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都城市示意照片，并非吉隆坡实景",
+      googleMapsQuery: "马来西亚吉隆坡",
       excerpt: "从一段散步开始认识吉隆坡，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是吉隆坡的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是吉隆坡的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Kuala Lumpur Café",
+      title: "吉隆坡咖啡馆",
       coordinates: [3.146, 101.6939], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Kuala Lumpur, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚吉隆坡咖啡馆",
       excerpt: "在吉隆坡找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条吉隆坡的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条吉隆坡的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Kuala Lumpur Guesthouse",
+      title: "吉隆坡旅舍",
       coordinates: [3.131, 101.6929], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Kuala Lumpur, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚吉隆坡酒店",
       excerpt: "给吉隆坡的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条吉隆坡的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条吉隆坡的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Kuala Lumpur City Walk",
+      title: "吉隆坡漫步",
       coordinates: [3.145, 101.6779], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/kyoto.jpg', imageAlt: "Illustrative streetscape of Kyoto; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Kuala Lumpur, Malaysia",
+      image: 'assets/images/kyoto.jpg', imageAlt: "京都街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚吉隆坡景点",
       excerpt: "把吉隆坡的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是吉隆坡的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是吉隆坡的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 39 · CITY: Penang, Malaysia · 槟城 =====
   {
-    id: "penang", city: "Penang", country: "Malaysia",
+    id: "penang", city: "槟城", country: "马来西亚",
     coordinates: [5.4141, 100.3288], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Penang",
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative city photograph of Tokyo; not a photograph of Penang",
-      googleMapsQuery: "Penang, Malaysia",
+      title: "槟城",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京城市示意照片，并非槟城实景",
+      googleMapsQuery: "马来西亚槟城",
       excerpt: "从一段散步开始认识槟城，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是槟城的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是槟城的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Penang Café",
+      title: "槟城咖啡馆",
       coordinates: [5.4211, 100.3358], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Penang, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚槟城咖啡馆",
       excerpt: "在槟城找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条槟城的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条槟城的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Penang Guesthouse",
+      title: "槟城旅舍",
       coordinates: [5.4061, 100.3348], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Penang, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚槟城酒店",
       excerpt: "给槟城的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条槟城的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条槟城的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Penang City Walk",
+      title: "槟城漫步",
       coordinates: [5.4201, 100.3198], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/tokyo.jpg', imageAlt: "Illustrative streetscape of Tokyo; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Penang, Malaysia",
+      image: 'assets/images/tokyo.jpg', imageAlt: "东京街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚槟城景点",
       excerpt: "把槟城的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是槟城的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是槟城的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 40 · CITY: Kuching, Malaysia · 古晋 =====
   {
-    id: "kuching", city: "Kuching", country: "Malaysia",
+    id: "kuching", city: "古晋", country: "马来西亚",
     coordinates: [1.5533, 110.3592], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Kuching",
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative city photograph of Paris; not a photograph of Kuching",
-      googleMapsQuery: "Kuching, Malaysia",
+      title: "古晋",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎城市示意照片，并非古晋实景",
+      googleMapsQuery: "马来西亚古晋",
       excerpt: "从一段散步开始认识古晋，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是古晋的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是古晋的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Kuching Café",
+      title: "古晋咖啡馆",
       coordinates: [1.5603, 110.3662], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Kuching, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚古晋咖啡馆",
       excerpt: "在古晋找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条古晋的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条古晋的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Kuching Guesthouse",
+      title: "古晋旅舍",
       coordinates: [1.5453, 110.3652], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Kuching, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚古晋酒店",
       excerpt: "给古晋的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条古晋的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条古晋的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Kuching City Walk",
+      title: "古晋漫步",
       coordinates: [1.5593, 110.3502], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/paris.jpg', imageAlt: "Illustrative streetscape of Paris; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Kuching, Malaysia",
+      image: 'assets/images/paris.jpg', imageAlt: "巴黎街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚古晋景点",
       excerpt: "把古晋的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是古晋的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是古晋的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 41 · CITY: Miri, Malaysia · 美里 =====
   {
-    id: "miri", city: "Miri", country: "Malaysia",
+    id: "miri", city: "美里", country: "马来西亚",
     coordinates: [4.3993, 113.9918], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Miri",
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative city photograph of Lisbon; not a photograph of Miri",
-      googleMapsQuery: "Miri, Malaysia",
+      title: "美里",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本城市示意照片，并非美里实景",
+      googleMapsQuery: "马来西亚美里",
       excerpt: "从一段散步开始认识美里，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是美里的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是美里的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Miri Café",
+      title: "美里咖啡馆",
       coordinates: [4.4063, 113.9988], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Miri, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚美里咖啡馆",
       excerpt: "在美里找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条美里的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条美里的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Miri Guesthouse",
+      title: "美里旅舍",
       coordinates: [4.3913, 113.9978], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Miri, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚美里酒店",
       excerpt: "给美里的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条美里的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条美里的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Miri City Walk",
+      title: "美里漫步",
       coordinates: [4.4053, 113.9828], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/lisbon.jpg', imageAlt: "Illustrative streetscape of Lisbon; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Miri, Malaysia",
+      image: 'assets/images/lisbon.jpg', imageAlt: "里斯本街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚美里景点",
       excerpt: "把美里的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是美里的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是美里的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 42 · CITY: Labuan, Malaysia · 纳闽 =====
   {
-    id: "labuan", city: "Labuan", country: "Malaysia",
+    id: "labuan", city: "纳闽", country: "马来西亚",
     coordinates: [5.2831, 115.2308], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Labuan",
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative city photograph of Copenhagen; not a photograph of Labuan",
-      googleMapsQuery: "Labuan, Malaysia",
+      title: "纳闽",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根城市示意照片，并非纳闽实景",
+      googleMapsQuery: "马来西亚纳闽",
       excerpt: "从一段散步开始认识纳闽，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是纳闽的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是纳闽的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Labuan Café",
+      title: "纳闽咖啡馆",
       coordinates: [5.2901, 115.2378], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Labuan, Malaysia",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "马来西亚纳闽咖啡馆",
       excerpt: "在纳闽找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条纳闽的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条纳闽的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Labuan Guesthouse",
+      title: "纳闽旅舍",
       coordinates: [5.2751, 115.2368], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Labuan, Malaysia",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "马来西亚纳闽酒店",
       excerpt: "给纳闽的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条纳闽的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条纳闽的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Labuan City Walk",
+      title: "纳闽漫步",
       coordinates: [5.2891, 115.2218], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/copenhagen.jpg', imageAlt: "Illustrative streetscape of Copenhagen; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Labuan, Malaysia",
+      image: 'assets/images/copenhagen.jpg', imageAlt: "哥本哈根街景示意照片，并非此景点实景",
+      googleMapsQuery: "马来西亚纳闽景点",
       excerpt: "把纳闽的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是纳闽的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是纳闽的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
   // ===== 43 · CITY: Bandar Seri Begawan, Brunei · 斯里巴加湾市 =====
   {
-    id: "bandar-seri-begawan", city: "Bandar Seri Begawan", country: "Brunei",
+    id: "bandar-seri-begawan", city: "斯里巴加湾市", country: "文莱",
     coordinates: [4.9031, 114.9398], // 城市近似中心；替换地点时请更新坐标。
     cityStory: {
-      title: "Bandar Seri Begawan",
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative city photograph of Shanghai; not a photograph of Bandar Seri Begawan",
-      googleMapsQuery: "Bandar Seri Begawan, Brunei",
+      title: "斯里巴加湾市",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海城市示意照片，并非斯里巴加湾市实景",
+      googleMapsQuery: "文莱斯里巴加湾市",
       excerpt: "从一段散步开始认识斯里巴加湾市，在这里整理自己的城市印象与旅行片段。",
-      content: [{ heading: 'City notes', paragraphs: ["这是斯里巴加湾市的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
+      content: [{ heading: '城市笔记', paragraphs: ["这是斯里巴加湾市的城市介绍示例。你可以在这里写初到这座城市的感受、喜欢的街区和旅行中的难忘片刻。", "下面关联了饮食、住宿和景点各一条示例，便于找到对应内容；替换正文、照片、日期和评分后，就能成为自己的旅行记录。" ] }],
     },
-    // Food & Drinks：修改这一块即可更新本城市的饮食示例。
+    // 饮食：修改这一块即可更新本城市的饮食示例。
     food: {
-      title: "Bandar Seri Begawan Café",
+      title: "斯里巴加湾市咖啡馆",
       coordinates: [4.9101, 114.9468], // 示例位置，不代表实际商户。
-      image: 'assets/images/coffee.jpg', imageAlt: 'Illustrative café interior; not a photograph of an actual listed venue',
-      googleMapsQuery: "cafes in Bandar Seri Begawan, Brunei",
+      image: 'assets/images/coffee.jpg', imageAlt: '咖啡馆内景示意照片，并非所列地点实景',
+      googleMapsQuery: "文莱斯里巴加湾市咖啡馆",
       excerpt: "在斯里巴加湾市找一杯喜欢的咖啡，把一次放松的停留写成饮食笔记。",
-      content: [{ heading: 'Food & Drinks notes', paragraphs: ["这是一条斯里巴加湾市的虚构饮食示例，不对应真实咖啡馆。Google Maps 链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
+      content: [{ heading: '饮食笔记', paragraphs: ["这是一条斯里巴加湾市的虚构饮食示例，不对应真实咖啡馆。谷歌地图链接搜索本城市的咖啡馆，方便你选择真实地点后替换。", "可以在这里填写实际店名、推荐饮品、用餐感受和消费记录；记得同步修改坐标、地图链接与照片。" ] }],
     },
-    // Accommodations：修改这一块即可更新本城市的住宿示例。
+    // 膳宿：修改这一块即可更新本城市的住宿示例。
     accommodation: {
-      title: "Bandar Seri Begawan Guesthouse",
+      title: "斯里巴加湾市旅舍",
       coordinates: [4.8951, 114.9458], // 示例位置，不代表实际住宿。
-      image: 'assets/images/stay.jpg', imageAlt: 'Illustrative guest room; not a photograph of an actual listed accommodation',
-      googleMapsQuery: "hotels in Bandar Seri Begawan, Brunei",
+      image: 'assets/images/stay.jpg', imageAlt: '客房示意照片，并非所列住宿实景',
+      googleMapsQuery: "文莱斯里巴加湾市酒店",
       excerpt: "给斯里巴加湾市的旅途留一个休息的地方，在这里记录房间、睡眠与入住体验。",
-      content: [{ heading: 'Accommodation notes', paragraphs: ["这是一条斯里巴加湾市的虚构住宿示例，不代表真实酒店或民宿。Google Maps 链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
+      content: [{ heading: '膳宿笔记', paragraphs: ["这是一条斯里巴加湾市的虚构住宿示例，不代表真实酒店或民宿。谷歌地图链接搜索本城市的酒店，图片是通用客房示意。", "替换为实际入住记录时，可以填写住宿名称、房型、交通、安静程度和自己的评分，并更新真实坐标与地图链接。" ] }],
     },
-    // Attractions：修改这一块即可更新本城市的景点示例。
+    // 胜地：修改这一块即可更新本城市的景点示例。
     attraction: {
-      title: "Bandar Seri Begawan City Walk",
+      title: "斯里巴加湾市漫步",
       coordinates: [4.9091, 114.9308], // 示例位置，不代表真实景点入口。
-      image: 'assets/images/shanghai.jpg', imageAlt: "Illustrative streetscape of Shanghai; not a photograph of this attraction",
-      googleMapsQuery: "tourist attractions in Bandar Seri Begawan, Brunei",
+      image: 'assets/images/shanghai.jpg', imageAlt: "上海街景示意照片，并非此景点实景",
+      googleMapsQuery: "文莱斯里巴加湾市景点",
       excerpt: "把斯里巴加湾市的一处风景或一段散步保存在这里，慢慢补上自己的发现。",
-      content: [{ heading: 'Attraction notes', paragraphs: ["这是斯里巴加湾市的景点占位示例，并非已核实的景点推荐。Google Maps 链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
+      content: [{ heading: '胜地笔记', paragraphs: ["这是斯里巴加湾市的景点占位示例，并非已核实的景点推荐。谷歌地图链接搜索当地景点，便于后续换成你真正去过或想去的地方。", "可以把标题改成真实景点名称，再补充游览体验、照片和实用信息。地图坐标目前仅用于展示，请按实际地点更新。" ] }],
     },
   },
 ];
@@ -1706,15 +1706,15 @@ const entryDefaults = {
   demo: true,
   date: '2026-11-03',
   rating: 4.5,
-  googleMapsUrl: '', // 可选：粘贴从 Google Maps 复制的地点分享链接。
+  googleMapsUrl: '', // 可选：粘贴从谷歌地图复制的地点分享链接。
   googleMapsEmbedUrl: '', // 可选：只粘贴“嵌入地图”代码中的 src 地址，不是整段 iframe。
 };
 
 const contentTypes = [
-  { key: 'cityStory', category: 'cities', suffix: '', subtitle: 'A city, one memory at a time', tags: ['City notes', 'Sample'] },
-  { key: 'food', category: 'food', suffix: 'food', subtitle: 'Coffee, good food, and a little pause', tags: ['Coffee', 'Sample'] },
-  { key: 'accommodation', category: 'stays', suffix: 'stay', subtitle: 'A place to rest along the way', tags: ['Comfort', 'Sample'] },
-  { key: 'attraction', category: 'attractions', suffix: 'attraction', subtitle: 'A small discovery around the corner', tags: ['Walking', 'Sample'] },
+  { key: 'cityStory', category: 'cities', suffix: '', subtitle: '一座城市，一段记忆', tags: ['城市笔记', '示例'] },
+  { key: 'food', category: 'food', suffix: 'food', subtitle: '一杯咖啡，一餐好味，一段小憩', tags: ['咖啡', '示例'] },
+  { key: 'accommodation', category: 'stays', suffix: 'stay', subtitle: '旅途中歇脚的地方', tags: ['舒适', '示例'] },
+  { key: 'attraction', category: 'attractions', suffix: 'attraction', subtitle: '转角处的小小发现', tags: ['步行', '示例'] },
 ];
 
 // 程序自动把城市分组转换为页面、筛选和地图需要的记录；普通内容编辑无需修改这里。
@@ -1736,15 +1736,15 @@ export const entries = cityGuides.flatMap((guide) => contentTypes.flatMap((type)
 
 // ===== 图片来源：新增本地照片后，可在这里登记来源或标注自己的摄影作品 =====
 export const imageCredits = [
-  { file: 'assets/images/kyoto.jpg', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e', credit: 'Unsplash', subject: 'Kyoto' },
-  { file: 'assets/images/tokyo.jpg', url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf', credit: 'Unsplash', subject: 'Tokyo' },
-  { file: 'assets/images/shanghai.jpg', url: 'https://unsplash.com/photos/_klbOmCI05I', credit: 'George Dagerotip / Unsplash', subject: 'Shanghai' },
-  { file: 'assets/images/paris.jpg', url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34', credit: 'Unsplash', subject: 'Paris' },
-  { file: 'assets/images/lisbon.jpg', url: 'https://unsplash.com/photos/ljhCEaHYWJ8', credit: 'Aayush Gupta / Unsplash', subject: 'Lisbon' },
-  { file: 'assets/images/copenhagen.jpg', url: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc', credit: 'Unsplash', subject: 'Copenhagen' },
-  { file: 'assets/images/coffee.jpg', url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb', credit: 'Unsplash', subject: 'Illustrative café interior; not a depicted venue' },
-  { file: 'assets/images/bakery.jpg', url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff', credit: 'Unsplash', subject: 'Illustrative bread photograph; not a depicted venue' },
-  { file: 'assets/images/stay.jpg', url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32', credit: 'Unsplash', subject: 'Illustrative guest room; not a depicted accommodation' },
+  { file: 'assets/images/kyoto.jpg', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e', credit: 'Unsplash', subject: '京都' },
+  { file: 'assets/images/tokyo.jpg', url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf', credit: 'Unsplash', subject: '东京' },
+  { file: 'assets/images/shanghai.jpg', url: 'https://unsplash.com/photos/_klbOmCI05I', credit: 'George Dagerotip / Unsplash', subject: '上海' },
+  { file: 'assets/images/paris.jpg', url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34', credit: 'Unsplash', subject: '巴黎' },
+  { file: 'assets/images/lisbon.jpg', url: 'https://unsplash.com/photos/ljhCEaHYWJ8', credit: 'Aayush Gupta / Unsplash', subject: '里斯本' },
+  { file: 'assets/images/copenhagen.jpg', url: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc', credit: 'Unsplash', subject: '哥本哈根' },
+  { file: 'assets/images/coffee.jpg', url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb', credit: 'Unsplash', subject: '咖啡馆内景示意照片，并非所列地点实景' },
+  { file: 'assets/images/bakery.jpg', url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff', credit: 'Unsplash', subject: '面包示意照片，并非所列地点实景' },
+  { file: 'assets/images/stay.jpg', url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32', credit: 'Unsplash', subject: '客房示意照片，并非所列住宿实景' },
 ];
 
 export const getEntry = (id) => entries.find((entry) => entry.id === id);

@@ -56,7 +56,7 @@ function injectMapStyles() {
     .travel-popup img{display:block;width:100%;height:128px;object-fit:cover;background:#dce5d9}
     .travel-popup-body{padding:15px 17px 17px}
     .travel-popup-category{display:block;margin-bottom:5px;color:#777d71;text-transform:uppercase;letter-spacing:1.6px;font-size:9px}
-    .travel-popup h3{margin:0 0 5px;font-family:Georgia,serif;font-size:21px;line-height:1.2;font-weight:400;color:#263e31}
+    .travel-popup h3{margin:0 0 5px;font-family:'Songti SC','STSong','SimSun',serif;font-size:21px;line-height:1.4;font-weight:400;color:#263e31}
     .travel-popup-location{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px;font-size:10px;color:#767c71}
     .travel-popup-rating{color:#8b723a;white-space:nowrap}
     .travel-popup p{margin:11px 0 12px;font-size:11px;line-height:1.9;color:#677063}
@@ -113,18 +113,18 @@ function popup(entry) {
   const meta = document.createElement('div');
   meta.className = 'travel-popup-location';
   const location = document.createElement('span');
-  location.textContent = `${entry.city}, ${entry.country}`;
+  location.textContent = `${entry.city}，${entry.country}`;
   const rating = document.createElement('span');
   rating.className = 'travel-popup-rating';
-  rating.textContent = Number.isFinite(entry.rating) ? `★ ${entry.rating.toFixed(1)} / 5` : 'Not rated';
+  rating.textContent = Number.isFinite(entry.rating) ? `★ ${entry.rating.toFixed(1)} / 5` : '暂无评分';
   meta.append(location, rating);
   const excerpt = document.createElement('p');
   excerpt.lang = 'zh-CN';
   excerpt.textContent = entry.excerpt;
   const link = document.createElement('a');
   link.href = `#/journal/${encodeURIComponent(entry.id)}`;
-  link.textContent = 'Read story ↗';
-  link.setAttribute('aria-label', `Read ${entry.title}`);
+  link.textContent = '阅读全文 ↗';
+  link.setAttribute('aria-label', `阅读《${entry.title}》`);
   body.append(label, heading, meta, excerpt, link);
   wrapper.append(body);
   return wrapper;
@@ -132,15 +132,16 @@ function popup(entry) {
 
 function initializeLeaflet(container, initialEntries) {
   const L = window.L;
-  if (!L) throw new Error('Leaflet could not be loaded.');
+  if (!L) throw new Error('地图组件加载失败。');
   const map = L.map(container, {
     center: [35, 70], zoom: 3, minZoom: 0, maxZoom: 19,
-    zoomControl: true, scrollWheelZoom: false, worldCopyJump: true,
+    zoomControl: false, scrollWheelZoom: false, worldCopyJump: true,
   });
-  map.zoomControl.setPosition('bottomright');
+  L.control.zoom({ position: 'bottomright', zoomInTitle: '放大地图', zoomOutTitle: '缩小地图' }).addTo(map);
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com/" title="交互地图组件" target="_blank" rel="noopener noreferrer">地图组件</a>');
   const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">开放街图</a>贡献者',
   }).addTo(map);
   let loadedTiles = 0;
   let failedTiles = 0;
@@ -155,7 +156,7 @@ function initializeLeaflet(container, initialEntries) {
     tileNotice = L.control({ position: 'bottomleft' });
     tileNotice.onAdd = () => {
       const note = L.DomUtil.create('div', 'travel-map-notice');
-      note.textContent = 'The map background is unavailable. Your saved places are still clickable.';
+      note.textContent = '地图底图暂时无法加载，已保存的地点仍可点击查看。';
       return note;
     };
     tileNotice.addTo(map);
@@ -176,6 +177,10 @@ function initializeLeaflet(container, initialEntries) {
   map.on('popupopen', event => {
     Object.assign(event.popup.options, popupOptions());
     event.popup.update();
+    // 地图组件的关闭按钮没有语言选项，在弹窗打开时补上中文辅助说明。
+    const closeButton = event.popup.getElement()?.querySelector('.leaflet-popup-close-button');
+    closeButton?.setAttribute('aria-label', '关闭地点详情');
+    closeButton?.setAttribute('title', '关闭地点详情');
   });
   const controller = {
     provider: 'leaflet',
@@ -186,8 +191,8 @@ function initializeLeaflet(container, initialEntries) {
       currentEntries.forEach(entry => {
         const marker = L.marker(entry.coordinates, {
           icon: L.divIcon({ html: createPin(entry), className: 'travel-pin-wrap', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -18] }),
-          title: `${entry.title} — ${entry.city}, ${entry.country}`,
-          alt: `Open ${entry.title}`, keyboard: true, riseOnHover: true,
+          title: `${entry.title} — ${entry.city}，${entry.country}`,
+          alt: `查看${entry.title}`, keyboard: true, riseOnHover: true,
           zIndexOffset: entry.category === 'cities' ? 100 : 0,
         }).addTo(map);
         marker.bindPopup(() => popup(entry), popupOptions());
@@ -236,15 +241,15 @@ function loadGoogleMaps() {
     const callback = '__travelBlogGoogleReady';
     const cleanup = () => { clearTimeout(timeout); delete window[callback]; };
     const timeout = setTimeout(() => {
-      cleanup(); script.remove(); reject(new Error('Google Maps timed out.'));
+      cleanup(); script.remove(); reject(new Error('谷歌地图加载超时。'));
     }, 10000);
     window[callback] = () => { cleanup(); resolve(window.google.maps); };
     script.src = `https://maps.googleapis.com/maps/api/js?${new URLSearchParams({
       key: mapConfig.googleMapsApiKey, callback, loading: 'async',
-      language: mapConfig.language || 'en', v: 'weekly', libraries: 'marker',
+      language: mapConfig.language || 'zh-CN', v: 'weekly', libraries: 'marker',
     })}`;
     script.async = true;
-    script.addEventListener('error', () => { cleanup(); reject(new Error('Google Maps could not be loaded.')); }, { once: true });
+    script.addEventListener('error', () => { cleanup(); reject(new Error('谷歌地图加载失败。')); }, { once: true });
     document.head.append(script);
   });
   return googleLoader;
@@ -252,11 +257,11 @@ function loadGoogleMaps() {
 
 async function initializeGoogle(container, initialEntries, isCancelled = () => false) {
   await loadGoogleMaps();
-  if (isCancelled()) throw new Error('Google Maps initialization was cancelled.');
+  if (isCancelled()) throw new Error('谷歌地图初始化已取消。');
   const [{ Map: GoogleMap, InfoWindow }, { AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
     google.maps.importLibrary('maps'), google.maps.importLibrary('marker'), google.maps.importLibrary('core'),
   ]);
-  if (isCancelled()) throw new Error('Google Maps initialization was cancelled.');
+  if (isCancelled()) throw new Error('谷歌地图初始化已取消。');
   const map = new GoogleMap(container, {
     center: { lat: 35, lng: 70 }, zoom: 3, minZoom: 0,
     mapId: mapConfig.googleMapsMapId || 'DEMO_MAP_ID',
@@ -277,7 +282,7 @@ async function initializeGoogle(container, initialEntries, isCancelled = () => f
       currentEntries.forEach(entry => {
         const marker = new AdvancedMarkerElement({
           map, position: { lat: entry.coordinates[0], lng: entry.coordinates[1] },
-          title: `${entry.title} — ${entry.city}, ${entry.country}`, content: createPin(entry),
+          title: `${entry.title} — ${entry.city}，${entry.country}`, content: createPin(entry),
           zIndex: entry.category === 'cities' ? 100 : 0,
         });
         marker.addListener('click', () => {
@@ -342,7 +347,7 @@ export async function createTravelMap(container, entries, options = {}) {
     } catch {
       const message = document.createElement('div');
       message.className = 'travel-map-unavailable';
-      message.textContent = 'The map is unavailable. Explore the city list below to read every story.';
+      message.textContent = '地图暂时无法使用，你仍可从下方城市列表阅读旅行记录。';
       container.append(message);
       adapter = { provider: 'unavailable', setEntries() {}, reset() {}, focus() {}, destroy() { container.replaceChildren(); } };
     }
@@ -355,13 +360,13 @@ export async function createTravelMap(container, entries, options = {}) {
       rejectAuthFailure = reject;
       initializationTimer = setTimeout(() => {
         cancelGoogleAttempt = true;
-        reject(new Error('Google Maps initialization timed out.'));
+        reject(new Error('谷歌地图初始化超时。'));
       }, 12000);
     });
     unsubscribeAuthFailure = subscribeToGoogleAuthFailure(() => {
       cancelGoogleAttempt = true;
       if (adapter?.provider === 'google') fallback();
-      else rejectAuthFailure(new Error('Google Maps authorization failed.'));
+      else rejectAuthFailure(new Error('谷歌地图授权失败。'));
     });
     try {
       adapter = await Promise.race([

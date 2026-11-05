@@ -3,9 +3,9 @@ import { createTravelMap } from './map.js';
 import { escapeHtml as esc, journalUrl, parseRoute, filterEntries, countryLabel, googleMapsUrl, googleMapsEmbedUrl } from './utils.js';
 
 // 页面职责：首页 renderHome、分类 renderCollection、城市/地点详情 renderArticle。
-// 正文、照片、评分和 Google Maps 链接在 data.js 的对应城市分块中修改。
+// 正文、照片、评分和 Google Maps 链接在 cities/data_<城市>_<国家>.js 中修改。
 // 首页底部精选：把这里的 ID 改成任何已有记录 ID（城市 ID + -food / -stay / -attraction）。
-const featuredIds = ['hefei-food', 'huangshan-attraction', 'singapore-stay'];
+const featuredIds = ['da-nang-food', 'da-nang-attraction', 'singapore-stay'];
 
 // 首页文案：诗歌保留原有分行；标题、作者与正文可在这里分别编辑。
 const siteName = "十一十一's Travel Blog";
@@ -51,6 +51,8 @@ const descriptions = {
   stays: '旅途中暂时的家：一扇好看的窗、一张舒服的床，以及醒来后的第一束光。',
 };
 const cities = entries.filter((entry) => entry.category === 'cities');
+// 城市索引固定按评分降序排列；同分时保留数据清单顺序，不影响其他视图。
+const rankedCities = [...cities].sort((first, second) => second.rating - first.rating);
 const main = document.querySelector('#main');
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#primary-navigation');
@@ -89,10 +91,10 @@ function renderHome() {
       <div class="map-footnote"><span>${icon('pin',11)} <span id="map-count">${entries.length} 个收藏地点</span> · 点击标记，阅读旅途故事</span><span id="map-provider" aria-live="polite">地图加载中…</span></div>
     </section>
     <section class="journal-section" aria-labelledby="city-list-heading"><div class="section-intro"><div><div class="eyebrow">城市索引</div><h2 id="city-list-heading">那些留在记忆里的城市。</h2></div><a class="text-link" href="#/cities">浏览全部城市 ${icon('arrow',14)}</a></div>
-      <div class="city-list">${cities.map((city,index) => `<a class="city-row" href="${journalUrl(city.id)}"><span class="city-index">${String(index+1).padStart(2,'0')}</span>${image(city,'city-thumb')}<div class="city-row-info"><h3>${esc(city.title)}</h3><p>${esc(countryLabel(city.country))}</p></div><span class="city-row-rating" aria-label="评分 ${city.rating}，满分 5 分">${rating(city)}</span>${icon('northeast',18).replace('<svg','<svg class="city-row-arrow"')}</a>`).join('')}</div>
+      <p id="city-list-hint" class="city-list-hint">按评分从高到低排列 · 显示 ${Math.min(10, cities.length)} 行，上下滚动浏览全部 ${cities.length} 座城市</p>
+      <div class="city-list" role="region" tabindex="0" aria-labelledby="city-list-heading" aria-describedby="city-list-hint">${rankedCities.map((city,index) => `<a class="city-row" href="${journalUrl(city.id)}"><span class="city-index">${String(index+1).padStart(2,'0')}</span>${image(city,'city-thumb')}<div class="city-row-info"><h3>${esc(city.title)}</h3><p>${esc(countryLabel(city.country))}</p></div><span class="city-row-rating" aria-label="评分 ${city.rating}，满分 5 分">${rating(city)}</span>${icon('northeast',18).replace('<svg','<svg class="city-row-arrow"')}</a>`).join('')}</div>
     </section>
     <section class="journal-section home-stories" aria-labelledby="stories-heading"><div class="section-intro"><div><div class="eyebrow">旅途之间</div><h2 id="stories-heading">值得记住的小事。</h2></div><span class="tiny-label">一餐一宿，慢享旅途。</span></div><div class="card-grid">${featured.map(card).join('')}</div></section>
-    <div class="home-note"><p>慢慢走，慢慢归。</p><span lang="zh-CN">这是博客的示例篇章。城市、评分与文字仅用于展示，等待被真实的旅行记忆填满。</span></div>
   </div>`;
 }
 

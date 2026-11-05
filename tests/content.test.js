@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access } from 'node:fs/promises';
-import { categories, entries, imageCredits, entryUrl } from '../js/data.js';
+import { access, readdir } from 'node:fs/promises';
+import { categories, cityGuides, entries, imageCredits, entryUrl } from '../js/data.js';
 import { filterEntries, journalUrl, parseRoute, escapeHtml, googleMapsUrl, googleMapsEmbedUrl, countryLabel } from '../js/utils.js';
 
 const siteRoot = new URL('../', import.meta.url);
 const han = /\p{Script=Han}/u;
 const latin = /\p{Script=Latin}/u;
 
-// The city index should keep the owner's requested names and order.
+// The data registry keeps its original order; the home index sorts by rating.
 const requestedCities = [
   ['合肥', '中国'], ['芜湖', '中国'], ['南京', '中国'], ['黄山', '中国'],
   ['阜阳', '中国'], ['杭州', '中国'], ['广州', '中国'], ['深圳', '中国'],
@@ -24,6 +24,8 @@ const requestedCities = [
   ['吉隆坡', '马来西亚'], ['槟城', '马来西亚'], ['古晋', '马来西亚'],
   ['美里', '马来西亚'], ['纳闽', '马来西亚'], ['斯里巴加湾市', '文莱'],
 ];
+const domesticCountries = new Set(['中国', '香港特别行政区', '澳门特别行政区']);
+const internationalCityCount = requestedCities.filter(([, country]) => !domesticCountries.has(country)).length;
 
 test('the requested cities keep their exact names, country labels and order', () => {
   const cities = entries.filter((entry) => entry.category === 'cities');
@@ -32,12 +34,40 @@ test('the requested cities keep their exact names, country labels and order', ()
     ['cities', '城市'], ['attractions', '胜地'],
     ['food', '饮食'], ['stays', '膳宿'],
   ]);
-  assert.equal(entries.length, requestedCities.length * 4);
+  assert.equal(entries.length, requestedCities.length + internationalCityCount * 3);
   for (const city of cities) {
     for (const category of categories) {
-      assert.equal(entries.filter((entry) => entry.cityId === city.id && entry.category === category.id).length, 1,
-        `${city.id}: expected one ${category.label} example`);
+      const expectedCount = category.id === 'cities' || !domesticCountries.has(city.country) ? 1 : 0;
+      assert.equal(entries.filter((entry) => entry.cityId === city.id && entry.category === category.id).length, expectedCount,
+        `${city.id}: expected ${expectedCount} ${category.label} records`);
     }
+  }
+});
+
+test('domestic cities, including Hong Kong and Macau, retain only city stories', () => {
+  const domesticGuides = cityGuides.filter(({ country }) => domesticCountries.has(country));
+  assert.equal(domesticGuides.length, 15);
+  for (const guide of domesticGuides) {
+    assert.ok(guide.cityStory, `${guide.id}: missing city story`);
+    for (const field of ['food', 'accommodation', 'attraction']) {
+      assert.equal(Object.hasOwn(guide, field), false, `${guide.id}: ${field} content must be removed`);
+    }
+    assert.deepEqual(entries.filter(({ cityId }) => cityId === guide.id).map(({ id }) => id), [guide.id]);
+  }
+});
+
+test('every city file is registered once and supplies the shared city data', async () => {
+  const cityDirectory = new URL('../js/cities/', import.meta.url);
+  const files = (await readdir(cityDirectory)).filter((file) => file.endsWith('.js'));
+  assert.equal(files.length, requestedCities.length);
+  assert.equal(new Set(cityGuides).size, cityGuides.length);
+  assert.equal(new Set(cityGuides.map(({ id }) => id)).size, cityGuides.length);
+  for (const file of files) {
+    assert.match(file, /^data_[a-z0-9_]+\.js$/);
+    const { default: guide } = await import(new URL(file, cityDirectory));
+    assert.ok(cityGuides.includes(guide), `${file}: city file is missing from the registry`);
+    const cityEntry = entries.find(({ id }) => id === guide.id);
+    assert.equal(cityEntry.content, guide.cityStory.content, `${file}: city entry does not use the authored content`);
   }
 });
 
@@ -61,27 +91,28 @@ test('every journal entry belongs to a valid city and has usable map and article
     assert.ok(Number.isFinite(entry.rating) && entry.rating >= 0 && entry.rating <= 5);
     assert.ok(Number.isFinite(Date.parse(`${entry.date}T12:00:00Z`)), `${entry.id}: invalid article date`);
     for (const label of [entry.title, entry.city, entry.country, entry.subtitle, ...entry.tags]) {
-      assert.ok(label?.length && han.test(label) && !latin.test(label), `${entry.id}: titles and labels should be Chinese`);
+      assert.ok(typeof label === 'string' && label.trim(), `${entry.id}: missing title or label`);
     }
-    assert.ok(han.test(entry.excerpt), `${entry.id}: missing Chinese excerpt`);
+    assert.ok(typeof entry.excerpt === 'string' && entry.excerpt.trim(), `${entry.id}: missing excerpt`);
     assert.ok(entry.content.length > 0, `${entry.id}: empty article`);
     for (const section of entry.content) {
-      assert.ok(section.heading && han.test(section.heading) && !latin.test(section.heading));
-      assert.ok(section.paragraphs.length > 0 && section.paragraphs.every((paragraph) => han.test(paragraph)), `${entry.id}: missing Chinese body`);
+      assert.ok(typeof section.heading === 'string' && section.heading.trim(), `${entry.id}: missing section heading`);
+      assert.ok(section.paragraphs.length > 0 && section.paragraphs.every((paragraph) => typeof paragraph === 'string' && paragraph.trim()), `${entry.id}: missing article body`);
     }
   }
 });
 
-test('all displayed journal content and map queries use Chinese', () => {
-  const displayedText = categories.flatMap(({ label, singular, description }) => [label, singular, description]);
+test('category and location labels remain Chinese while authored text may mix languages', () => {
+  const interfaceText = categories.flatMap(({ label, singular, description }) => [label, singular, description]);
   for (const entry of entries) {
-    displayedText.push(entry.title, entry.city, entry.country, entry.subtitle, entry.imageAlt, entry.excerpt,
-      entry.googleMapsQuery, ...entry.tags,
-      ...entry.content.flatMap(({ heading, paragraphs }) => [heading, ...paragraphs]),
-      ...(entry.gallery || []).flatMap(({ alt, caption }) => [alt, caption].filter(Boolean)));
+    interfaceText.push(entry.city, entry.country);
+    for (const text of [entry.imageAlt, entry.googleMapsQuery,
+      ...(entry.gallery || []).flatMap(({ alt, caption }) => [alt, caption].filter(Boolean))]) {
+      assert.ok(typeof text === 'string' && text.trim(), `${entry.id}: missing image description or map query`);
+    }
   }
-  for (const text of displayedText) {
-    assert.ok(text && han.test(text) && !latin.test(text), `untranslated visible text: ${text}`);
+  for (const text of interfaceText) {
+    assert.ok(text && han.test(text) && !latin.test(text), `untranslated category or location label: ${text}`);
   }
 });
 
@@ -102,9 +133,9 @@ test('every city, card and map record can resolve through the same journal URL',
     assert.equal(route.page, 'journal');
     assert.equal(entries.find((record) => record.id === route.id), entry);
   }
-  const home = parseRoute('#/?place=hefei-food');
+  const home = parseRoute('#/?place=da-nang-food');
   assert.equal(home.page, 'home');
-  assert.equal(home.params.get('place'), 'hefei-food');
+  assert.equal(home.params.get('place'), 'da-nang-food');
   assert.equal(parseRoute('').page, 'home');
   assert.equal(parseRoute('#/food').page, 'food');
   assert.equal(parseRoute('#/attractions').page, 'attractions');
@@ -115,11 +146,12 @@ test('every city, card and map record can resolve through the same journal URL',
 });
 
 test('combined category, city and search filters keep only matching records', () => {
-  assert.deepEqual(filterEntries(entries, { category: 'food', city: 'hefei', search: ' 合肥 ' }).map((entry) => entry.id), ['hefei-food']);
+  assert.deepEqual(filterEntries(entries, { category: 'food', city: 'da-nang', search: ' 岘港 ' }).map((entry) => entry.id), ['da-nang-food']);
+  assert.deepEqual(filterEntries(entries, { category: 'food', city: 'hefei', search: ' 合肥 ' }), []);
   assert.deepEqual(filterEntries(entries, { category: 'food', city: 'wuhu', search: '合肥' }), []);
   assert.deepEqual(filterEntries(entries, { category: 'stays', city: 'singapore' }).map((entry) => entry.id), ['singapore-stay']);
   assert.deepEqual(filterEntries(entries, { category: 'attractions', city: 'bandar-seri-begawan' }).map((entry) => entry.id), ['bandar-seri-begawan-attraction']);
-  assert.equal(filterEntries(entries, { category: 'food', search: '咖啡' }).length, requestedCities.length);
+  assert.equal(filterEntries(entries, { category: 'food', search: '咖啡' }).length, internationalCityCount);
   assert.deepEqual(filterEntries(entries, { search: 'this-place-does-not-exist' }), []);
   assert.deepEqual(filterEntries(entries, { search: '   ' }), entries);
 });
@@ -130,7 +162,7 @@ test('country filters include every matching city and combine with category and 
   assert.ok(chineseCities.some(({ id }) => id === 'hefei'));
   assert.ok(chineseCities.some(({ id }) => id === 'kunming'));
   assert.ok(chineseCities.every(({ country }) => country === '中国'));
-  assert.equal(filterEntries(entries, { country: '中国' }).length, 52);
+  assert.equal(filterEntries(entries, { country: '中国' }).length, 13);
   const malaysiaStays = filterEntries(entries, { category: 'stays', country: '马来西亚' });
   assert.deepEqual(malaysiaStays.map(({ city }) => city), ['新山', '马六甲', '吉隆坡', '槟城', '古晋', '美里', '纳闽']);
   assert.deepEqual(filterEntries(entries, { category: 'attractions', country: '泰国', search: ' 曼谷 ' }).map(({ id }) => id), ['bangkok-attraction']);

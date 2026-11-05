@@ -19,7 +19,7 @@ export function countryLabel(country = '') {
   return flag ? `${flag} ${name}` : name;
 }
 
-// 谷歌地图外链与详情页小地图共用同一个查询；也可在 data.js 单独填写分享链接。
+// 谷歌地图外链与详情页小地图共用同一个查询；也可在 js/cities/ 对应城市文件中填写分享链接。
 function mapsQuery(entry) {
   return entry.googleMapsQuery?.trim()
     || [entry.category === 'cities' ? '' : entry.title, entry.city, entry.country].filter(Boolean).join(', ');
